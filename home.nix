@@ -13,6 +13,8 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
+  # home.stateVersion = "25.11"; # Please read the comment before changing.
+  # home.stateVersion = "24.05"; # Please read the comment before changing.
   home.stateVersion = "25.11"; # Please read the comment before changing.
 
   # Allow unfree packages
@@ -133,6 +135,8 @@
     # pkgs.ghostty
     # Very slow compared to Flatpak version for some reason. No time to debug ...
     # pkgs.discord
+
+    pkgs.firefox
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -334,13 +338,6 @@
     enable = true;
   };
 
-  programs.ghostty = {
-    enable = true;
-    enableZshIntegration = true;
-    installBatSyntax = true;
-    installVimSyntax = true;
-  };
-
   # programs.command-not-found = {
   #   enable = true;
   # };
@@ -350,4 +347,11 @@
     enable = true;
     enableZshIntegration = true;
   };
+
+  # programs.ghostty = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  #   installBatSyntax = true;
+  #   installVimSyntax = true;
+  # };
 }
