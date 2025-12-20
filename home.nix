@@ -184,7 +184,6 @@
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
-    # EDITOR = "code --wait --new-window"
     EDITOR = "code --wait --new-window";
     VISUAL = "code --wait --new-window";
   };
@@ -203,14 +202,15 @@
       ".tmp/"
     ];
     # Sign all commits using ssh key
-    signing.format = "ssh";
-    signing.key = "~/.ssh/id_ed25519.pub";
-    signing.signByDefault = true;
+    signing = {
+      format = "ssh";
+      key = "~/.ssh/id_ed25519.pub";
+      signByDefault = true;
+    };
     settings = {
       user = {
         name = "Mohamed Bana";
         email = "mohamed.omar.bana@gmail.com";
-        # signingkey = "~/.ssh/id_ed25519.pub";
       };
       init = {
         defaultBranch = "main";
@@ -227,10 +227,7 @@
       };
       commit = {
         verbose = true;
-        # gpgsign = true;
       };
-      # gpg.format = "ssh";
-      # commit.gpgsign = true;
       # Use SSH instead of HTTPS for GitHub and GitLab
       url = {
         "git@github.com:" = {
