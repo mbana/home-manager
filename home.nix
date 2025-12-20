@@ -15,6 +15,9 @@
   # release notes.
   home.stateVersion = "25.11"; # Please read the comment before changing.
 
+  # Enable fontconfig to manage fonts, some bueaityful fonts ...
+  fonts.fontconfig.enable = true;
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
@@ -39,6 +42,9 @@
       #!/usr/bin/env sh
       /usr/bin/ptyxis --new-window --standalone
     '')
+
+    pkgs.iosevka
+    pkgs.fira-sans
 
     pkgs.curl
     pkgs.git
@@ -107,6 +113,7 @@
     pkgs.bpftrace
     pkgs.libbpf
     pkgs.bcc
+    pkgs.pwru
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -143,6 +150,7 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
     # EDITOR = "code --wait --new-window"
+    EDITOR = "code-insiders --wait --new-window";
   };
 
   # Let Home Manager install and manage itself.
