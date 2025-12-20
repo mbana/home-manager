@@ -94,9 +94,19 @@
     pkgs.xz
     pkgs.lz4
     pkgs.zstd
-    pkgs.tar
     pkgs.gzip
     pkgs.bzip2
+
+    # eBPF tools
+    pkgs.bpf-linker
+    pkgs.bpftrace
+    pkgs.bpftools
+    pkgs.bpfmon
+    pkgs.bpftop
+    pkgs.bpftune
+    pkgs.bpftrace
+    pkgs.libbpf
+    pkgs.bcc
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
