@@ -15,6 +15,15 @@
   # release notes.
   home.stateVersion = "25.11"; # Please read the comment before changing.
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfreePredicate = (pkg: true);
+
+  # Enable XDG base directory support or rather programs to show in application menu.
+  # targets.genericLinux.enable = true;
+  xdg = {
+    enable = true;
+  };
+
   # Enable fontconfig to manage fonts, some bueaityful fonts ...
   fonts.fontconfig.enable = true;
 
@@ -54,7 +63,9 @@
     pkgs.gdb
     pkgs.valgrind
     pkgs.vim
+
     pkgs.neovim
+    pkgs.vscode
 
     pkgs.coreutils
     pkgs.moreutils
@@ -67,6 +78,8 @@
     pkgs.zsh-autosuggestions
     pkgs.zsh-syntax-highlighting
     pkgs.zsh-history-substring-search
+
+    # pkgs.nix-locate
 
     pkgs.starship
     pkgs.atuin
@@ -86,10 +99,11 @@
 
     pkgs.nmap
     pkgs.tcpdump
-    pkgs.wireshark
+    # pkgs.wireshark
     pkgs.socat
     pkgs.netcat
     pkgs.traceroute
+    pkgs.tshark
 
     pkgs.screenfetch
     pkgs.neofetch
@@ -114,6 +128,9 @@
     pkgs.libbpf
     pkgs.bcc
     pkgs.pwru
+
+    pkgs.ghostty
+    pkgs.discord
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -129,6 +146,24 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    ".gdbinit".text = ''
+      set debuginfod enabled on
+
+      set confirm off
+      set verbose on
+
+      set print pretty on
+      set print object on
+      set print static-members on
+
+      set history save on
+      set history size unlimited
+      set history filename ~/.gdb_history
+
+      set pagination off
+      set startup-quietly on
+    '';
   };
 
   # Home Manager can also manage your environment variables through
@@ -150,7 +185,8 @@
   home.sessionVariables = {
     # EDITOR = "emacs";
     # EDITOR = "code --wait --new-window"
-    EDITOR = "code-insiders --wait --new-window";
+    EDITOR = "code --wait --new-window";
+    VISUAL = "code --wait --new-window";
   };
 
   # Let Home Manager install and manage itself.
@@ -159,40 +195,42 @@
   programs.git ={
     enable = true;
     lfs.enable = true;
+    ignores = [
+      # Ignore these folders
+      ".ignore"
+      ".ignore/"
+      ".tmp"
+      ".tmp/"
+    ];
+    # Sign all commits using ssh key
+    signing.format = "ssh";
+    signing.key = "~/.ssh/id_ed25519.pub";
+    signing.signByDefault = true;
     settings = {
       user = {
         name = "Mohamed Bana";
         email = "mohamed.omar.bana@gmail.com";
-        signingkey = "~/.ssh/id_ed25519.pub";
+        # signingkey = "~/.ssh/id_ed25519.pub";
       };
-      extraConfig = {
-        init = {
-          defaultBranch = "main";
-        };
-        color = {
-          ui = "true";
-          advice = "true";
-          status = "always";
-        };
-        core = {
-          ignorecase = "false";
-          hideDotFiles = "false";
-          # editor = "code --wait --new-window";
-        };
-        ignores = [
-          # Ignore these folders
-          ".ignore"
-          ".ignore/"
-          ".tmp"
-          ".tmp/"
-        ];
-        # Sign all commits using ssh key
-        gpg.format = "ssh";
-        commit.gpgsign = true;
+      init = {
+        defaultBranch = "main";
+      };
+      color = {
+        ui = "true";
+        advice = "true";
+        status = "always";
+      };
+      core = {
+        ignorecase = "false";
+        hideDotFiles = "false";
+        editor = "code --wait --new-window";
       };
       commit = {
         verbose = true;
+        # gpgsign = true;
       };
+      # gpg.format = "ssh";
+      # commit.gpgsign = true;
       # Use SSH instead of HTTPS for GitHub and GitLab
       url = {
         "git@github.com:" = {
@@ -208,6 +246,12 @@
           ];
         };
       };
+      alias = {
+        d = "diff";
+        dc = "diff --cached";
+        s = "status";
+        ll = "log -n1";
+      };
     };
   };
 
@@ -221,9 +265,12 @@
       copy = "xclip -selection clipboard";
       paste = "xclip -o -selection clipboard";
       ip = "ip --color";
-      fd = "fd --follow --exclude /proc --exclude /sys --exclude $(go env GOPATH)";
+      fd = "fd --hidden --follow";
+      # fd = "fd --hidden --follow --exclude /proc --exclude /sys --exclude $(go env GOPATH)";
       # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),**/.git/*,**/*.rs}'";
-      rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),.git,*.rs}'";
+      # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),.git,*.rs}'";
+      rg = "rg --follow";
+      ll = "ls -alh --color=auto";
     };
     history = {
       append = true;
@@ -239,38 +286,38 @@
       share = false;
       size = 1000000000;
     };
+    initContent = ''
+      source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+    '';
+    sessionVariables = {
+      EDITOR = "code --wait --new-window";
+    };
   };
 
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-
     # Configuration written to ~/.config/starship.toml
     settings = {
-      # "$schema" = "https://starship.rs/config-schema.json";
-
-      #add_newline = true;
-
-      #line_break = {
-      #  disabled = true;
-      #}
-
+      ## "$schema" = "https://starship.rs/config-schema.json";
+      ##
+      ##add_newline = true;
+      ##line_break = {
+      ##  disabled = true;
+      ##}
       localip = {
         ssh_only = false;
         format = "@[$localipv4](bold red) ";
         disabled = false;
       };
-
       username = {
         disabled = false;
         show_always = true;
       };
-
       hostname = {
         disabled = false;
         ssh_only = false;
       };
-
       directory = {
         truncate_to_repo = false;
         truncation_length = 0;
@@ -282,5 +329,26 @@
     enable = true;
     enableZshIntegration = true;
     flags = [ "--disable-up-arrow" ]; # or --disable-ctrl-r
+  };
+
+  programs.vscode = {
+    enable = true;
+  };
+
+  programs.ghostty = {
+    enable = true;
+    enableZshIntegration = true;
+    installBatSyntax = true;
+    installVimSyntax = true;
+  };
+
+  # programs.command-not-found = {
+  #   enable = true;
+  # };
+
+  # Takes a very long time to index.
+  programs.nix-index = {
+    enable = true;
+    enableZshIntegration = true;
   };
 }
