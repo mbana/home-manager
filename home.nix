@@ -20,126 +20,47 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfreePredicate = (pkg: true);
 
+  targets.genericLinux.enable = true;
+
   # Enable XDG base directory support or rather programs to show in application menu.
-  # targets.genericLinux.enable = true;
   xdg = {
     enable = true;
+    mime.enable = true;
   };
 
-  # Enable fontconfig to manage fonts, some bueaityful fonts ...
+  # # The critical missing piece for me
+  # xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
+
+  # Enable fontconfig to manage fonts.
   fonts.fontconfig.enable = true;
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+  # # The home.packages option allows you to install Nix packages into your
+  # # environment.
+  # home.packages = [''''
+  #   # # Adds the 'hello' command to your environment. It prints a friendly
+  #   # # "Hello, world!" when run.
+  #   # pkgs.hello
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+  #   # # It is sometimes useful to fine-tune packages, for example, by applying
+  #   # # overrides. You can do that directly here, just don't forget the
+  #   # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+  #   # # fonts?
+  #   # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+  #   # # You can also create simple shell scripts directly inside your
+  #   # # configuration. For example, this adds a command 'my-hello' to your
+  #   # # environment:
+  #   # (pkgs.writeShellScriptBin "my-hello" ''
+  #   #   echo "Hello, ${config.home.username}!"
+  #   # '')
 
-    (pkgs.writeShellScriptBin "ptyxis.sh" ''
-      #!/usr/bin/env sh
-      /usr/bin/ptyxis --new-window --standalone
-    '')
+  #   (pkgs.writeShellScriptBin "ptyxis.sh" ''
+  #     #!/usr/bin/env sh
+  #     /usr/bin/ptyxis --new-window --standalone
+  #   '')
+  # ];
 
-    pkgs.iosevka
-    pkgs.fira-sans
-
-    pkgs.curl
-    pkgs.git
-    pkgs.wget
-    pkgs.tmux
-    pkgs.zellij
-    pkgs.gdb
-    pkgs.valgrind
-    pkgs.vim
-
-    pkgs.neovim
-    pkgs.vscode
-
-    pkgs.coreutils
-    pkgs.moreutils
-    pkgs.tree
-
-    pkgs.rclone
-    pkgs.rsync
-
-    pkgs.zsh
-    pkgs.zsh-autosuggestions
-    pkgs.zsh-syntax-highlighting
-    pkgs.zsh-history-substring-search
-
-    # pkgs.nix-locate
-
-    pkgs.starship
-    pkgs.atuin
-
-    pkgs.fd
-    pkgs.ripgrep
-
-    pkgs.jq
-
-    pkgs.go
-    pkgs.nodejs
-    # pkgs.rustup
-
-    pkgs.htop
-    pkgs.btop
-    pkgs.glances
-
-    pkgs.nmap
-    pkgs.tcpdump
-    # pkgs.wireshark
-    pkgs.socat
-    pkgs.netcat
-    pkgs.traceroute
-    pkgs.tshark
-
-    pkgs.screenfetch
-    pkgs.neofetch
-
-    pkgs.zip
-    pkgs.unzip
-    pkgs.p7zip
-    pkgs.xz
-    pkgs.lz4
-    pkgs.zstd
-    pkgs.gzip
-    pkgs.bzip2
-
-    # eBPF tools
-    pkgs.bpf-linker
-    pkgs.bpftrace
-    pkgs.bpftools
-    pkgs.bpfmon
-    pkgs.bpftop
-    pkgs.bpftune
-    pkgs.bpftrace
-    pkgs.libbpf
-    pkgs.bcc
-    pkgs.pwru
-
-    # Does not appear in applications menu, no time to debug ...
-    # pkgs.ghostty
-    # Very slow compared to Flatpak version for some reason. No time to debug ...
-    # pkgs.discord
-
-    pkgs.firefox
-  ];
-
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
+ # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
@@ -172,6 +93,100 @@
     '';
   };
 
+  home.packages = with pkgs; [
+    (pkgs.writeShellScriptBin "ptyxis.sh" ''
+      #!/usr/bin/env sh
+      /usr/bin/ptyxis --new-window --standalone
+    '')
+
+    iosevka
+    fira-sans
+
+    curl
+    git
+    wget
+    tmux
+    zellij
+    gdb
+    valgrind
+
+    vim
+    neovim
+    ## Seems outdated and some extensions will not run without a specific version of vscode
+    #vscode
+
+    coreutils
+    moreutils
+    tree
+
+    rclone
+    rsync
+
+    zsh
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-history-substring-search
+
+    # nix-locate
+
+    starship
+    atuin
+
+    fd
+    ripgrep
+
+    jq
+
+    go
+    nodejs
+    rustc
+    cargo
+    python3
+
+    htop
+    btop
+    glances
+
+    nmap
+    tcpdump
+    # wireshark
+    socat
+    netcat
+    traceroute
+    tshark
+
+    screenfetch
+    neofetch
+
+    zip
+    unzip
+    p7zip
+    xz
+    lz4
+    zstd
+    gzip
+    bzip2
+
+    # eBPF tools
+    bpf-linker
+    bpftrace
+    bpftools
+    bpfmon
+    bpftop
+    bpftune
+    bpftrace
+    libbpf
+    bcc
+    pwru
+
+    # Does not appear in applications menu, no time to debug ...
+    ghostty
+    # Very slow compared to Flatpak version for some reason. No time to debug ...
+    discord
+
+    firefox
+  ];
+
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell
@@ -189,13 +204,15 @@
   #  /etc/profiles/per-user/mbana/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
     EDITOR = "code --wait --new-window";
     VISUAL = "code --wait --new-window";
   };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # # Nicely reload system units when changing configs
+  # systemd.user.startServices = "sd-switch";
 
   programs.git ={
     enable = true;
@@ -334,9 +351,9 @@
     flags = [ "--disable-up-arrow" ]; # or --disable-ctrl-r
   };
 
-  programs.vscode = {
-    enable = true;
-  };
+  # programs.vscode = {
+  #   enable = true;
+  # };
 
   # programs.command-not-found = {
   #   enable = true;
@@ -348,10 +365,32 @@
     enableZshIntegration = true;
   };
 
-  # programs.ghostty = {
-  #   enable = true;
-  #   enableZshIntegration = true;
-  #   installBatSyntax = true;
-  #   installVimSyntax = true;
-  # };
+  programs.ghostty = {
+    enable = true;
+    enableZshIntegration = true;
+    installBatSyntax = true;
+    installVimSyntax = true;
+  };
+
+  programs.firefox.enable = true;
+
+  dconf.settings = {
+    "org/gnome/desktop/wm/keybindings" = {
+      ## Oddly enough the below does not work
+      #close = ["<Super>q"];
+      # conflicts with vscode, so disable them
+      move-to-workspace-down = [""];
+      move-to-workspace-up =  [""];
+    };
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        custom-keybindings = [
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        ];
+      };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      name = "terminal";
+      command = "/usr/bin/ptyxis --new-window --standalone";
+      binding = "<Super>t";
+    };
+  };
 }
