@@ -129,8 +129,10 @@
     pkgs.bcc
     pkgs.pwru
 
-    pkgs.ghostty
-    pkgs.discord
+    # Does not appear in applications menu, no time to debug ...
+    # pkgs.ghostty
+    # Very slow compared to Flatpak version for some reason. No time to debug ...
+    # pkgs.discord
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
