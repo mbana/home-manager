@@ -13,7 +13,6 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  # home.stateVersion = "25.11"; # Please read the comment before changing.
   # home.stateVersion = "24.05"; # Please read the comment before changing.
   home.stateVersion = "25.11"; # Please read the comment before changing.
 
@@ -28,15 +27,12 @@
     mime.enable = true;
   };
 
-  # # The critical missing piece for me
-  # xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
-
   # Enable fontconfig to manage fonts.
   fonts.fontconfig.enable = true;
 
   # # The home.packages option allows you to install Nix packages into your
   # # environment.
-  # home.packages = [''''
+  # home.packages = [
   #   # # Adds the 'hello' command to your environment. It prints a friendly
   #   # # "Hello, world!" when run.
   #   # pkgs.hello
@@ -60,7 +56,7 @@
   #   '')
   # ];
 
- # Home Manager is pretty good at managing dotfiles. The primary way to manage
+  # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
@@ -179,12 +175,12 @@
     bcc
     pwru
 
-    # Does not appear in applications menu, no time to debug ...
     ghostty
-    # Very slow compared to Flatpak version for some reason. No time to debug ...
     discord
 
     firefox
+
+    scrcpy
   ];
 
   # Home Manager can also manage your environment variables through
@@ -210,9 +206,6 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  # # Nicely reload system units when changing configs
-  # systemd.user.startServices = "sd-switch";
 
   programs.git ={
     enable = true;
@@ -350,14 +343,6 @@
     enableZshIntegration = true;
     flags = [ "--disable-up-arrow" ]; # or --disable-ctrl-r
   };
-
-  # programs.vscode = {
-  #   enable = true;
-  # };
-
-  # programs.command-not-found = {
-  #   enable = true;
-  # };
 
   # Takes a very long time to index.
   programs.nix-index = {
