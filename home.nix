@@ -19,7 +19,8 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfreePredicate = (pkg: true);
 
-  targets.genericLinux.enable = true;
+  # # Causing issues in aarch64 on Linux, so disabling
+  # targets.genericLinux.enable = true;
 
   # Enable XDG base directory support or rather programs to show in application menu.
   xdg = {
@@ -137,11 +138,11 @@
     nodejs
     rustc
     cargo
-    python3
+    # python3
 
     htop
     btop
-    glances
+    # glances
 
     nmap
     tcpdump
@@ -175,12 +176,17 @@
     bcc
     pwru
 
-    ghostty
-    discord
+    # Disabling: Not needed currently.
+    # ghostty
 
-    firefox
+    ## Not available in aarch64 on Linux.
+    # discord
 
-    scrcpy
+    # Disabling: Using Flatpak Firefox for now.
+    # firefox
+
+    # Disabling: Not needed currently.
+    # scrcpy
   ];
 
   # Home Manager can also manage your environment variables through
@@ -199,10 +205,10 @@
   #
   #  /etc/profiles/per-user/mbana/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    EDITOR = "code --wait --new-window";
-    VISUAL = "code --wait --new-window";
-  };
+  # home.sessionVariables = {
+  #   EDITOR = "code --wait --new-window";
+  #   VISUAL = "code --wait --new-window";
+  # };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -278,7 +284,7 @@
       copy = "xclip -selection clipboard";
       paste = "xclip -o -selection clipboard";
       ip = "ip --color";
-      fd = "fd --hidden --follow";
+      fd = "fdfind --hidden --follow";
       # fd = "fd --hidden --follow --exclude /proc --exclude /sys --exclude $(go env GOPATH)";
       # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),**/.git/*,**/*.rs}'";
       # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),.git,*.rs}'";
@@ -299,12 +305,12 @@
       share = false;
       size = 1000000000;
     };
-    initContent = ''
-      source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-    '';
-    sessionVariables = {
-      EDITOR = "code --wait --new-window";
-    };
+    # initContent = ''
+    #   source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+    # '';
+    # sessionVariables = {
+    #   EDITOR = "code --wait --new-window";
+    # };
   };
 
   programs.starship = {
@@ -344,20 +350,22 @@
     flags = [ "--disable-up-arrow" ]; # or --disable-ctrl-r
   };
 
-  # Takes a very long time to index.
-  programs.nix-index = {
-    enable = true;
-    enableZshIntegration = true;
-  };
+  # # Takes a very long time to index.
+  # programs.nix-index = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  # };
 
-  programs.ghostty = {
-    enable = true;
-    enableZshIntegration = true;
-    installBatSyntax = true;
-    installVimSyntax = true;
-  };
+  # Disabling: Not needed currently.
+  # programs.ghostty = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  #   installBatSyntax = true;
+  #   installVimSyntax = true;
+  # };
 
-  programs.firefox.enable = true;
+  # Disabling: Using Flatpak Firefox for now.
+  # programs.firefox.enable = true;
 
   dconf.settings = {
     "org/gnome/desktop/wm/keybindings" = {
