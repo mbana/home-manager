@@ -5,24 +5,18 @@ Nix Home Manager configuration, see <https://nix-community.github.io/home-manage
 ## Get and Configure
 
 ```sh
-# For some packages to run it seems necessary to run:
+# For some packages to run it seems necessary to run for Discord and other apps:
 echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
-echo
 sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
-echo
 nix-channel --add https://nixos.org/channels/nixos-25.11 nixpkgs
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz home-manager
 nix-channel --list
 nix-channel --update
-echo
 nix-shell '<home-manager>' -A install
-echo
-mkdir -pv ~/.config/
-cd ~/.config/
-echo
 git clone git@github.com:mbana/home-manager.git
-cd ~/.config/home-manager
-echo
+cd home-manager
+ln -vf $(pwd)/home.nix ~/.config/home-manager/home.nix
+sudo chsh --shell $(which zsh) $(whoami)
 home-manager switch
 ```
 
