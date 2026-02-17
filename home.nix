@@ -22,11 +22,11 @@
   # # Causing issues in aarch64 on Linux, so disabling
   # targets.genericLinux.enable = true;
 
-  # # Enable XDG base directory support or rather programs to show in application menu.
-  # xdg = {
-  #   enable = true;
-  #   mime.enable = true;
-  # };
+  # Enable XDG base directory support or rather programs to show in application menu.
+  xdg = {
+    enable = true;
+    mime.enable = true;
+  };
 
   # Enable fontconfig to manage fonts.
   fonts.fontconfig.enable = true;
@@ -367,25 +367,25 @@
   # Disabling: Using Flatpak Firefox for now.
   # programs.firefox.enable = true;
 
-  dconf.settings = {
-    "org/gnome/desktop/wm/keybindings" = {
-      ## Oddly enough the below does not work
-      #close = ["<Super>q"];
-      # conflicts with vscode, so disable them
-      move-to-workspace-down = [""];
-      move-to-workspace-up =  [""];
-    };
-      "org/gnome/settings-daemon/plugins/media-keys" = {
-        custom-keybindings = [
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-        ];
-      };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      name = "terminal";
-      command = "/usr/bin/ptyxis --new-window --standalone";
-      binding = "<Super>t";
-    };
-  };
+  # dconf.settings = {
+  #   "org/gnome/desktop/wm/keybindings" = {
+  #     ## Oddly enough the below does not work
+  #     #close = ["<Super>q"];
+  #     # conflicts with vscode, so disable them
+  #     move-to-workspace-down = [""];
+  #     move-to-workspace-up =  [""];
+  #   };
+  #     "org/gnome/settings-daemon/plugins/media-keys" = {
+  #       custom-keybindings = [
+  #         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+  #       ];
+  #     };
+  #   "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+  #     name = "terminal";
+  #     command = "/usr/bin/ptyxis --new-window --standalone";
+  #     binding = "<Super>t";
+  #   };
+  # };
 
   programs.ssh = {
     enable = true;
