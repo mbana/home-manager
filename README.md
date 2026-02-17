@@ -12,6 +12,7 @@ echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
 ```sh
 sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
 . ~/.nix-profile/etc/profile.d/nix.sh
+echo 'if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by mbana installer' | tee -a ~/.zprofile
 nix-channel --add https://nixos.org/channels/nixos-25.11 nixpkgs
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz home-manager
 nix-channel --list
