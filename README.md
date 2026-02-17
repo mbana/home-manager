@@ -7,13 +7,17 @@ Nix Home Manager configuration, see <https://nix-community.github.io/home-manage
 ```sh
 # For some packages to run it seems necessary to run for Discord and other apps:
 echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+```
+
+```sh
 sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
+. ~/.nix-profile/etc/profile.d/nix.sh
 nix-channel --add https://nixos.org/channels/nixos-25.11 nixpkgs
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz home-manager
 nix-channel --list
 nix-channel --update
 nix-shell '<home-manager>' -A install
-git clone git@github.com:mbana/home-manager.git
+git clone https://github.com/mbana/home-manager.git
 cd home-manager
 ln -vf $(pwd)/home.nix ~/.config/home-manager/home.nix
 sudo chsh --shell $(which zsh) $(whoami)
@@ -21,6 +25,14 @@ home-manager switch
 ```
 
 Then start a new shell or optionally just reboot ☺.
+
+## Rust
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path
+echo '. "${HOME}/.cargo/env"' | tee -a ~/.zprofile
+echo '. "${HOME}/.cargo/env"' | tee -a ~/.profile
+```
 
 ### Notes
 

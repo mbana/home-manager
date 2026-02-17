@@ -22,11 +22,11 @@
   # # Causing issues in aarch64 on Linux, so disabling
   # targets.genericLinux.enable = true;
 
-  # Enable XDG base directory support or rather programs to show in application menu.
-  xdg = {
-    enable = true;
-    mime.enable = true;
-  };
+  # # Enable XDG base directory support or rather programs to show in application menu.
+  # xdg = {
+  #   enable = true;
+  #   mime.enable = true;
+  # };
 
   # Enable fontconfig to manage fonts.
   fonts.fontconfig.enable = true;
@@ -136,8 +136,8 @@
 
     go
     nodejs
-    rustc
-    cargo
+    # rustc
+    # cargo
     # python3
 
     htop
@@ -384,6 +384,26 @@
       name = "terminal";
       command = "/usr/bin/ptyxis --new-window --standalone";
       binding = "<Super>t";
+    };
+  };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "nebius.bana.io" = {
+        hostname = "66.201.4.153";
+        user = "mbana";
+        identityFile = "~/.ssh/id_ed25519";
+        forwardAgent = true;
+        # serverAliveInterval = 60;
+      };
+      "arm64.oci.bana.io" = {
+        hostname = "143.47.251.74";
+        user = "ubuntu";
+        identityFile = "~/.ssh/id_ed25519";
+        forwardAgent = true;
+        # serverAliveInterval = 60;
+      };
     };
   };
 }
