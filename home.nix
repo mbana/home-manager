@@ -125,6 +125,7 @@
     zsh-history-substring-search
 
     # nix-locate
+    nix-zsh-completions
 
     starship
     atuin
@@ -281,15 +282,20 @@
     syntaxHighlighting.enable = true;
     historySubstringSearch.enable = true;
     shellAliases = {
-      copy = "xclip -selection clipboard";
-      paste = "xclip -o -selection clipboard";
+      # copy = "xclip -selection clipboard";
+      # paste = "xclip -o -selection clipboard";
+
       ip = "ip --color";
-      fd = "fd --hidden --follow";
+
+      ll = "ls -alh --color=auto";
+
+      fd = "fd --hidden --ignore-case --follow --no-ignore-parent --no-ignore --unrestricted --show-errors --absolute-path";
       # fd = "fd --hidden --follow --exclude /proc --exclude /sys --exclude $(go env GOPATH)";
       # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),**/.git/*,**/*.rs}'";
       # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),.git,*.rs}'";
-      rg = "rg --follow";
-      ll = "ls -alh --color=auto";
+
+      # rg = "rg --hidden --follow --glob-case-insensitive --ignore-case --no-ignore --no-ignore-dot --no-ignore-exclude --no-ignore-global --no-ignore-parent --no-ignore-vcs --no-require-git --text --pcre2 --pretty";
+      rg = "rg --hidden --follow --glob-case-insensitive --ignore-case --no-ignore --pcre2 --pretty";
     };
     history = {
       append = true;
@@ -402,7 +408,27 @@
         user = "ubuntu";
         identityFile = "~/.ssh/id_ed25519";
         forwardAgent = true;
-        # serverAliveInterval = 60;
+      };
+      # Local stuff on same network
+      "dock-sabrent" = {
+        hostname = "10.0.0.2";
+        user = "mbana";
+        identityFile = "~/.ssh/id_ed25519";
+      };
+      "dock-kiwee" = {
+        hostname = "10.0.0.3";
+        user = "mbana";
+        identityFile = "~/.ssh/id_ed25519";
+      };
+      "mbana-zenbook-14" = {
+        hostname = "10.0.0.4";
+        user = "mbana";
+        identityFile = "~/.ssh/id_ed25519";
+      };
+      "mbana-medion-14" = {
+        hostname = "10.0.0.5";
+        user = "mbana";
+        identityFile = "~/.ssh/id_ed25519";
       };
     };
   };
