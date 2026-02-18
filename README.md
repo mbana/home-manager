@@ -18,6 +18,8 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/release-
 nix-channel --list
 nix-channel --update
 nix-shell '<home-manager>' -A install
+mkdir -pv ~/dev
+cd ~/dev
 git clone https://github.com/mbana/home-manager.git
 cd home-manager
 ln -vf $(pwd)/home.nix ~/.config/home-manager/home.nix
