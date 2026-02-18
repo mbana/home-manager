@@ -284,7 +284,7 @@
       copy = "xclip -selection clipboard";
       paste = "xclip -o -selection clipboard";
       ip = "ip --color";
-      fd = "fdfind --hidden --follow";
+      fd = "fd --hidden --follow";
       # fd = "fd --hidden --follow --exclude /proc --exclude /sys --exclude $(go env GOPATH)";
       # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),**/.git/*,**/*.rs}'";
       # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),.git,*.rs}'";
