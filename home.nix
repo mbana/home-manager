@@ -288,14 +288,17 @@
       ip = "ip --color";
 
       ll = "ls -alh --color=auto";
+      grep = "grep --color=auto";
 
-      fd = "fd --hidden --ignore-case --follow --no-ignore-parent --no-ignore --unrestricted --show-errors --absolute-path";
       # fd = "fd --hidden --follow --exclude /proc --exclude /sys --exclude $(go env GOPATH)";
       # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),**/.git/*,**/*.rs}'";
       # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),.git,*.rs}'";
+      # fd = "fd --hidden --ignore-case --follow --no-ignore-parent --no-ignore --unrestricted --show-errors --absolute-path";
+      fd = "fd --absolute-path --exclude /proc --exclude /sys --exclude $(go env GOPATH) --exclude '**/.git/*'";
 
       # rg = "rg --hidden --follow --glob-case-insensitive --ignore-case --no-ignore --no-ignore-dot --no-ignore-exclude --no-ignore-global --no-ignore-parent --no-ignore-vcs --no-require-git --text --pcre2 --pretty";
-      rg = "rg --hidden --follow --glob-case-insensitive --ignore-case --no-ignore --pcre2 --pretty";
+      # rg = "rg --hidden --follow --glob-case-insensitive --ignore-case --no-ignore --pcre2 --pretty";
+      rg = "rg --pcre2 --glob '!{/proc,/sys,$(go env GOPATH),**/.git/*}'";
     };
     history = {
       append = true;

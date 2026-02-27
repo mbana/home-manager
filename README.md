@@ -39,4 +39,5 @@ echo '. "${HOME}/.cargo/env"' | tee -a ~/.profile
 
 ### Notes
 
-For commands that require `sudo` run `sudo $(which bpftop)` as `--preserve-env` is not supported by `sudo-rs` at the moment, see: <https://github.com/trifectatechfoundation/sudo-rs/issues/1299> for more information.
+* For commands that require `sudo` run `sudo $(which bpftop)` as `--preserve-env` is not supported by `sudo-rs` at the moment, see: <https://github.com/trifectatechfoundation/sudo-rs/issues/1299> for more information.
+* Updating `programs.zsh.shellAliases` requires the shell to be restarted for aliases to be updated.
