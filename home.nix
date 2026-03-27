@@ -19,44 +19,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfreePredicate = (pkg: true);
 
-  # # Causing issues in aarch64 on Linux, so disabling
-  # targets.genericLinux.enable = true;
-
-  # Enable XDG base directory support or rather programs to show in application menu.
-  xdg = {
-    enable = true;
-    mime.enable = true;
-  };
-
-  # Enable fontconfig to manage fonts.
-  fonts.fontconfig.enable = true;
-
-  # # The home.packages option allows you to install Nix packages into your
-  # # environment.
-  # home.packages = [
-  #   # # Adds the 'hello' command to your environment. It prints a friendly
-  #   # # "Hello, world!" when run.
-  #   # pkgs.hello
-
-  #   # # It is sometimes useful to fine-tune packages, for example, by applying
-  #   # # overrides. You can do that directly here, just don't forget the
-  #   # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-  #   # # fonts?
-  #   # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-  #   # # You can also create simple shell scripts directly inside your
-  #   # # configuration. For example, this adds a command 'my-hello' to your
-  #   # # environment:
-  #   # (pkgs.writeShellScriptBin "my-hello" ''
-  #   #   echo "Hello, ${config.home.username}!"
-  #   # '')
-
-  #   (pkgs.writeShellScriptBin "ptyxis.sh" ''
-  #     #!/usr/bin/env sh
-  #     /usr/bin/ptyxis --new-window --standalone
-  #   '')
-  # ];
-
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -88,29 +50,30 @@
       set pagination off
       set startup-quietly on
     '';
+  
+    # https://github.com/nix-community/home-manager/issues/3090#issuecomment-3341948190
+#     ".ssh/authorized_keys".text = ''
+# ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDGRM+2Fne1yndOyeDWjRwlC2fuyISc3iQSQMRorN61 Mohamed Bana <mohamed.omar.bana@gmail.com>
+# sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIeIsv2ZKjE9K+QnU4zDN0BiGcodgHahdc5ihyds9j1uAAAABHNzaDo= mohamed.omar.bana@gmail.com
+# sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIJFBhPafCk7lIEWLBJxZkX06lncslfYdLTMYC8KHVJqkAAAABHNzaDo= Mohamed Bana <mohamed.omar.bana@gmail.com>
+
+#     '';
   };
 
   home.packages = with pkgs; [
-    (pkgs.writeShellScriptBin "ptyxis.sh" ''
-      #!/usr/bin/env sh
-      /usr/bin/ptyxis --new-window --standalone
-    '')
-
-    iosevka
-    fira-sans
+    # (pkgs.writeShellScriptBin "ptyxis.sh" ''
+    #   #!/usr/bin/env sh
+    #   /usr/bin/ptyxis --new-window --standalone
+    # '')
 
     curl
     git
     wget
     tmux
     zellij
-    gdb
-    valgrind
-
+  
     vim
     neovim
-    ## Seems outdated and some extensions will not run without a specific version of vscode
-    #vscode
 
     coreutils
     moreutils
@@ -127,24 +90,49 @@
     # nix-locate
     nix-zsh-completions
 
+    # Rust tools/stuff
+    # https://zaiste.net/posts/shell-commands-rust/
+    bat
+    exa
+    fd
+    procs
+    sd
+    dust
     starship
+    ripgrep
+    tokei
+    hyperfine
+    ytop
+    tealdeer
+    bandwhich
+    grex
+    rmesg
+    zoxide
+    delta
+    lsd
     atuin
 
-    fd
-    ripgrep
-
-    jq
-
     go
+    delve
     nodejs
     # rustc
     # cargo
     # python3
 
+    gdb
+    valgrind
+    lldb
+    llvm
+    clang
+    strace
+
+    jq
+
     htop
     btop
     # glances
 
+    # Networking stuff
     nmap
     tcpdump
     # wireshark
@@ -153,9 +141,13 @@
     traceroute
     tshark
 
+    tailscale
+
+    # System information tools
     screenfetch
     neofetch
 
+    # Comrpession tools
     zip
     unzip
     p7zip
@@ -176,18 +168,6 @@
     libbpf
     bcc
     pwru
-
-    # Disabling: Not needed currently.
-    # ghostty
-
-    ## Not available in aarch64 on Linux.
-    # discord
-
-    # Disabling: Using Flatpak Firefox for now.
-    # firefox
-
-    # Disabling: Not needed currently.
-    # scrcpy
   ];
 
   # Home Manager can also manage your environment variables through
@@ -365,40 +345,10 @@
   #   enableZshIntegration = true;
   # };
 
-  # Disabling: Not needed currently.
-  # programs.ghostty = {
-  #   enable = true;
-  #   enableZshIntegration = true;
-  #   installBatSyntax = true;
-  #   installVimSyntax = true;
-  # };
-
-  # Disabling: Using Flatpak Firefox for now.
-  # programs.firefox.enable = true;
-
-  # dconf.settings = {
-  #   "org/gnome/desktop/wm/keybindings" = {
-  #     ## Oddly enough the below does not work
-  #     #close = ["<Super>q"];
-  #     # conflicts with vscode, so disable them
-  #     move-to-workspace-down = [""];
-  #     move-to-workspace-up =  [""];
-  #   };
-  #     "org/gnome/settings-daemon/plugins/media-keys" = {
-  #       custom-keybindings = [
-  #         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-  #       ];
-  #     };
-  #   "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-  #     name = "terminal";
-  #     command = "/usr/bin/ptyxis --new-window --standalone";
-  #     binding = "<Super>t";
-  #   };
-  # };
-
   programs.ssh = {
     enable = true;
     matchBlocks = {
+      # amd64.nebius.bana.io
       "nebius.bana.io" = {
         hostname = "66.201.4.153";
         user = "mbana";
@@ -406,12 +356,21 @@
         forwardAgent = true;
         # serverAliveInterval = 60;
       };
-      "arm64.oci.bana.io" = {
+      # arm64.oci.bana.io
+      "oci.bana.io" = {
         hostname = "143.47.251.74";
-        user = "ubuntu";
+        user = "mbana";
         identityFile = "~/.ssh/id_ed25519";
         forwardAgent = true;
       };
+      # amd64.scw.oci.bana.io
+      "scw.bana.io" = {
+        hostname = "2001:bc8:710:f64c:dc00:ff:fec8:5b5";
+        user = "mbana";
+        identityFile = "~/.ssh/id_ed25519";
+        forwardAgent = true;
+      };
+
       # Local stuff on same network
       "dock-sabrent" = {
         hostname = "10.0.0.2";
@@ -425,11 +384,6 @@
       };
       "mbana-zenbook-14" = {
         hostname = "10.0.0.4";
-        user = "mbana";
-        identityFile = "~/.ssh/id_ed25519";
-      };
-      "mbana-medion-14" = {
-        hostname = "10.0.0.5";
         user = "mbana";
         identityFile = "~/.ssh/id_ed25519";
       };
