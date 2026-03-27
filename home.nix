@@ -52,20 +52,9 @@
     '';
   
     # https://github.com/nix-community/home-manager/issues/3090#issuecomment-3341948190
-#     ".ssh/authorized_keys".text = ''
-# ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDGRM+2Fne1yndOyeDWjRwlC2fuyISc3iQSQMRorN61 Mohamed Bana <mohamed.omar.bana@gmail.com>
-# sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIIeIsv2ZKjE9K+QnU4zDN0BiGcodgHahdc5ihyds9j1uAAAABHNzaDo= mohamed.omar.bana@gmail.com
-# sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIJFBhPafCk7lIEWLBJxZkX06lncslfYdLTMYC8KHVJqkAAAABHNzaDo= Mohamed Bana <mohamed.omar.bana@gmail.com>
-
-#     '';
   };
 
   home.packages = with pkgs; [
-    # (pkgs.writeShellScriptBin "ptyxis.sh" ''
-    #   #!/usr/bin/env sh
-    #   /usr/bin/ptyxis --new-window --standalone
-    # '')
-
     curl
     git
     wget
