@@ -363,7 +363,7 @@
         identityFile = "~/.ssh/id_ed25519";
         forwardAgent = true;
       };
-      # amd64.scw.oci.bana.io
+      # amd64.scw.bana.io
       "scw.bana.io" = {
         hostname = "2001:bc8:710:f64c:dc00:ff:fec8:5b5";
         user = "mbana";
