@@ -82,7 +82,6 @@
     # Rust tools/stuff
     # https://zaiste.net/posts/shell-commands-rust/
     bat
-    exa
     fd
     procs
     sd
@@ -91,11 +90,9 @@
     ripgrep
     tokei
     hyperfine
-    ytop
     tealdeer
     bandwhich
     grex
-    rmesg
     zoxide
     delta
     lsd
