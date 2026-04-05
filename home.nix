@@ -365,7 +365,8 @@
       };
       # amd64.scw.bana.io
       "scw.bana.io" = {
-        hostname = "2001:bc8:710:f64c:dc00:ff:fec8:5b5";
+        # hostname = "2001:bc8:710:f64c:dc00:ff:fec8:5b5";
+        hostname = "d614f050-2738-46f6-a4d7-68a4fea9633d.pub.instances.scw.cloud";
         user = "mbana";
         identityFile = "~/.ssh/id_ed25519";
         forwardAgent = true;
@@ -390,5 +391,5 @@
     };
   };
 
-
+  
 }
