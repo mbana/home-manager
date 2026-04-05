@@ -31,6 +31,16 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify
 echo '. "${HOME}/.cargo/env"' | tee -a ~/.zprofile | tee -a ~/.profile
 ```
 
+The last line above is probably not needed because the below is present in [`home.nix`](./home.nix):
+
+```nix
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "$HOME/.cargo/env"
+    "$HOME/go/bin"
+  ];
+```
+
 ## Notes
 
 * For commands that require `sudo` run `sudo $(which bpftop)` as `--preserve-env` is not supported by `sudo-rs` at the moment, see: <https://github.com/trifectatechfoundation/sudo-rs/issues/1299> for more information.

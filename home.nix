@@ -114,6 +114,7 @@
 
     jq
 
+    bottom
     htop
     btop
     # glances
@@ -154,6 +155,13 @@
     libbpf
     bcc
     pwru
+
+    # Git
+    gh
+
+    # AI tools
+    claude-code
+    
   ];
 
   # Home Manager can also manage your environment variables through
@@ -176,6 +184,13 @@
   #   EDITOR = "code --wait --new-window";
   #   VISUAL = "code --wait --new-window";
   # };
+
+  # For Claude, Rust and Go stuff.
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "$HOME/.cargo/env"
+    "$HOME/go/bin"
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -375,4 +390,6 @@
       };
     };
   };
+
+
 }
