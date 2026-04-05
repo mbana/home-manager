@@ -285,6 +285,11 @@
       # rg = "rg --hidden --follow --glob-case-insensitive --ignore-case --no-ignore --no-ignore-dot --no-ignore-exclude --no-ignore-global --no-ignore-parent --no-ignore-vcs --no-require-git --text --pcre2 --pretty";
       # rg = "rg --hidden --follow --glob-case-insensitive --ignore-case --no-ignore --pcre2 --pretty";
       rg = "rg --pcre2 --glob '!{/proc,/sys,$(go env GOPATH),**/.git/*}'";
+
+      # Navigation
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
     };
     history = {
       append = true;
