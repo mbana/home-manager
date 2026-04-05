@@ -33,6 +33,11 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
 
+    # Will allow us to install global npm packages without sudo and without polluting the Nix store, and also to have a consistent location for npm global packages across different machines. E.g., `npm install --global @openai/codex` will install it to `~/.npm-global/bin`.
+    ".npmrc".text = ''
+      prefix=~/.npm-global
+    '';
+
     ".gdbinit".text = ''
       set debuginfod enabled on
 
@@ -189,6 +194,7 @@
     "$HOME/.local/bin"
     "$HOME/.cargo/env"
     "$HOME/go/bin"
+    "$HOME/.npm-global/bin"
   ];
 
   # Let Home Manager install and manage itself.
@@ -391,5 +397,5 @@
     };
   };
 
-  
+
 }
