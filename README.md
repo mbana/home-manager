@@ -16,8 +16,8 @@ nix-shell '<home-manager>' -A install
 mkdir -pv ~/dev/github/mbana
 cd ~/dev/github/mbana
 git clone https://github.com/mbana/home-manager.git
-cd home-manager
-ln -vf $(pwd)/home.nix ~/.config/home-manager/home.nix
+cd ~/dev/github/mbana/home-manager
+ln -sfv $(pwd)/home.nix ~/.config/home-manager/home.nix
 home-manager switch
 sudo chsh --shell $(which zsh) $(whoami)
 ```
@@ -39,6 +39,12 @@ The last line above is probably not needed because the below is present in [`hom
     "$HOME/.cargo/env"
     "$HOME/go/bin"
   ];
+```
+
+## Updating
+
+```sh
+cd ~/dev/github/mbana/home-manager && git pull && ln -sfv $(pwd)/home.nix ~/.config/home-manager/home.nix && home-manager switch
 ```
 
 ## Notes

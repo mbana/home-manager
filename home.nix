@@ -161,7 +161,6 @@
 
     # AI tools
     claude-code
-    
   ];
 
   # Home Manager can also manage your environment variables through
