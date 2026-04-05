@@ -290,6 +290,9 @@
       ".." = "cd ..";
       "..." = "cd ../..";
       "...." = "cd ../../..";
+
+      # Home Manager
+      home-manager-switch = "cd ~/dev/github/mbana/home-manager && git pull && ln -sfv $(pwd)/home.nix ~/.config/home-manager/home.nix && home-manager switch";
     };
     history = {
       append = true;
