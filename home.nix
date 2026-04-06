@@ -295,6 +295,9 @@
 
       # Home Manager
       home-manager-switch = "cd ~/dev/github/mbana/home-manager && git pull && ln -sfv $(pwd)/home.nix ~/.config/home-manager/home.nix && home-manager switch";
+
+      # Dev aliases
+      dev-dir = "cd ~/dev/github/mbana/";
     };
     history = {
       append = true;
