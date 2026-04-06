@@ -109,6 +109,8 @@
     # rustc
     # cargo
     # python3
+    
+    sqlite
 
     gdb
     valgrind
