@@ -160,6 +160,9 @@
     # Git
     gh
 
+    # For https://blog.bana.io
+    hugo
+
     # AI tools
     claude-code
   ];
