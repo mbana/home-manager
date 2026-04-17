@@ -53,7 +53,13 @@
     # https://github.com/nix-community/home-manager/issues/3090#issuecomment-3341948190
   };
 
+  # Enable fontconfig to manage fonts.
+  fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [
+    iosevka
+    fira-sans
+
     curl
     git
     wget
