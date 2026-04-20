@@ -12,7 +12,7 @@ function enable_and_start_service_sshd() {
 
 function install_all_packages() {
   # pkg list-all | awk '{print $1}' | tail -n +2 | xargs -I{} pkg install -y {}
-  pkg list-all 2>/dev/null | awk '{print $1}' | tail -n +1000 | cut -d'/' -f1 | grep -E -v 'dropbear|hash-slinger|pyunbound' | xargs -I{} sh -c "pkg install -y {} || echo 'Failed to install {}'"
+  pkg list-all 2>/dev/null | awk '{print $1}' | tail -n +2500 | cut -d'/' -f1 | grep -E -v 'dropbear|hash-slinger|pyunbound|polyml' | xargs -I{} sh -c "pkg install -y {} || echo 'Failed to install {}'"
 }
 
 pkg update
@@ -58,15 +58,18 @@ cp -vr --interactive \
 # https://github.com/Automattic/node-canvas/issues/2385
 # mkdir ~/.gyp && echo "{'variables':{'android_ndk_path':''}}" > ~/.gyp/include.gypi
 
-# TODO: Remove as it is not working.
-pkg install -y tur-repo
-pkg install -y code-server
+# # TODO: Remove as it is not working.
+# pkg install -y tur-repo
+# pkg install -y code-server
 
-pkg update
-pkg upgrade -y
+# pkg update
+# pkg upgrade -y
 
-ln -svf /data/data/com.termux/files/usr/bin/code-server ~/.bin/vscode-server
-ln -svf /data/data/com.termux/files/usr/bin/code-server ~/.local/bin/vscode-server
-ln -svf /data/data/com.termux/files/usr/bin/code-server ~/bin/vscode-server
+# ln -svf /data/data/com.termux/files/usr/bin/code-server ~/.bin/vscode-server
+# ln -svf /data/data/com.termux/files/usr/bin/code-server ~/.local/bin/vscode-server
+# ln -svf /data/data/com.termux/files/usr/bin/code-server ~/bin/vscode-server
+
+# https://github.com/termux/glibc-packages
+# pkg install glibc-repo -y
 
 enable_and_start_service_sshd
