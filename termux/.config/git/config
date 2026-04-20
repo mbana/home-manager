@@ -28,7 +28,7 @@
 	format = "ssh"
 
 #[gpg "ssh"]
-	program = "/nix/store/s29f95k50f7rmydgicz6rzls6f0xmhnv-openssh-10.2p1/bin/ssh-keygen"
+#	program = "/nix/store/s29f95k50f7rmydgicz6rzls6f0xmhnv-openssh-10.2p1/bin/ssh-keygen"
 
 [init]
 	defaultBranch = "main"
