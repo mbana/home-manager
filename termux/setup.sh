@@ -29,7 +29,9 @@ pkg install -y \
   binutils \
   pkg-config \
   python3 \
-  nodejs-lts
+  nodejs-lts \
+  getconf \
+  git-lfs
 
 pkg update
 pkg upgrade -y

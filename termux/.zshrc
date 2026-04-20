@@ -4,7 +4,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
-PATH="$HOME/.local/bin:$HOME/.bin:$HOME/bin:$HOME/go/bin"
+PATH="$HOME/.local/bin:$HOME/.bin:$HOME/bin:$HOME/go/bin:$HOME/.cargo/bin:$PATH"
 
 alias ll='ls -alh --color=auto'
 alias ls='ls --color=auto'
