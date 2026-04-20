@@ -4,8 +4,20 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
-eval "$(atuin init zsh --disable-up-arrow)"
-eval "$(starship init zsh)"
+PATH="$HOME/.local/bin:$HOME/.bin:$HOME/bin:$HOME/go/bin"
 
 alias ll='ls -alh --color=auto'
 alias ls='ls --color=auto'
+alias ip='ip --color'
+alias grep='grep --color=auto'
+
+alias ".."='cd ..'
+alias "..."='cd ../..'
+alias "...."='cd ../../..'
+alias mkdir="mkdir -pv"
+alias cp="cp -rv"
+alias mv="mv -v"
+alias rm="rm -vi"
+
+eval "$(atuin init zsh --disable-up-arrow)"
+eval "$(starship init zsh)"
