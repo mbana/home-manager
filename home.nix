@@ -278,6 +278,7 @@
 
       ip = "ip --color";
 
+      ls = "ls --color=auto";
       ll = "ls -alh --color=auto";
       grep = "grep --color=auto";
 
