@@ -1,0 +1,5 @@
+#!/data/data/com.termux/files/usr/bin/sh
+termux-wake-lock
+. $PREFIX/etc/profile
+# Not sure about this ...
+ssh

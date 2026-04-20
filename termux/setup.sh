@@ -12,7 +12,7 @@ function enable_and_start_service_sshd() {
 
 function install_all_packages() {
   # pkg list-all | awk '{print $1}' | tail -n +2 | xargs -I{} pkg install -y {}
-  pkg list-all 2>/dev/null | awk '{print $1}' | tail -n +2 | xargs -I{} sh -c "pkg install -y {} || echo 'Failed to install {}'"
+  pkg list-all 2>/dev/null | awk '{print $1}' | tail -n +1000 | cut -d'/' -f1 | grep -E -v 'dropbear|hash-slinger|pyunbound' | xargs -I{} sh -c "pkg install -y {} || echo 'Failed to install {}'"
 }
 
 pkg update
@@ -43,7 +43,7 @@ pkg upgrade -y
 npm config set python python3
 node -v
 
-cp -vr \
+cp -vr --interactive \
   .config \
   .ssh \
   .zshrc \
@@ -51,9 +51,14 @@ cp -vr \
   .zsh_history \
   ~/
 
+cp -vr --interactive \
+  .termux \
+  ~/.termux/
+
 # https://github.com/Automattic/node-canvas/issues/2385
 # mkdir ~/.gyp && echo "{'variables':{'android_ndk_path':''}}" > ~/.gyp/include.gypi
 
+# TODO: Remove as it is not working.
 pkg install -y tur-repo
 pkg install -y code-server
 
