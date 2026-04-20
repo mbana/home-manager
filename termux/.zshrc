@@ -1,10 +1,12 @@
-
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
 PATH="$HOME/.local/bin:$HOME/.bin:$HOME/bin:$HOME/go/bin:$HOME/.cargo/bin:$PATH"
+
+# Rust stuff
+CARGO_NET_GIT_FETCH_WITH_CLI="true"
 
 alias ll='ls -alh --color=auto'
 alias ls='ls --color=auto'
