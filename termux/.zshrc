@@ -6,3 +6,6 @@ setopt appendhistory
 
 eval "$(atuin init zsh --disable-up-arrow)"
 eval "$(starship init zsh)"
+
+alias ll='ls -alh --color=auto'
+alias ls='ls --color=auto'
