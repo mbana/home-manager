@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+function enable_and_start_service_sshd() {
+  # local service="$1"
+  # termux-services enable "$service"
+  # termux-services start "$service"
+
+	sv-enable sshd
+	cp -v \
+    ./sshd_config \
+    /data/data/com.termux/files/usr/etc/ssh/sshd_config
+	sv down sshd || echo "sshd is not running, skipping restart"
+	sv up sshd
+  echo "sshd service enabled and started"
+}
+
 pkg update
 pkg upgrade -y
 
@@ -23,25 +37,25 @@ pkg upgrade -y
 npm config set python python3
 node -v
 
+cp -vr \
+  .config \
+  .ssh \
+  .zshrc \
+  .zprofile \
+  .zsh_history \
+  ~/
+
+# https://github.com/Automattic/node-canvas/issues/2385
+# mkdir ~/.gyp && echo "{'variables':{'android_ndk_path':''}}" > ~/.gyp/include.gypi
+
 pkg install -y tur-repo
 pkg install -y code-server
 
 pkg update
 pkg upgrade -y
 
-cp -vr \
-  .config \
-  .ssh \
-  .zshrc \
-  .zsh_history \
-  ~/
+ln -svf /data/data/com.termux/files/usr/bin/code-server ~/.bin/vscode-server
+ln -svf /data/data/com.termux/files/usr/bin/code-server ~/.local/bin/vscode-server
+ln -svf /data/data/com.termux/files/usr/bin/code-server ~/bin/vscode-server
 
-sv-enable sshd
-cp -v \
-  ./sshd_config \
-  /data/data/com.termux/files/usr/etc/ssh/sshd_config
-sv down sshd || echo "sshd is not running, skipping restart"
-sv up sshd
-
-# https://github.com/Automattic/node-canvas/issues/2385
-# mkdir ~/.gyp && echo "{'variables':{'android_ndk_path':''}}" > ~/.gyp/include.gypi
+enable_and_start_service_sshd
