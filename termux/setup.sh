@@ -6,7 +6,8 @@ function enable_and_start_service_sshd() {
     ./sshd_config \
     /data/data/com.termux/files/usr/etc/ssh/sshd_config
   sv down sshd || echo "sshd is not running, skipping restart"
-  sv up sshd
+  sv up sshd || echo "Failed to start sshd or it may already be running"
+  sv start sshd || echo "sshd is already running"
   echo "sshd service enabled and started"
 }
 
@@ -26,24 +27,27 @@ pkg install -y \
   tmux zellij util-linux build-essential \
   gawk ccache gnupg \
   openssh openssl-tool \
-  termux-services x11-repo termux-tools \
+  termux-services \
   android-tools \
   build-essential \
   binutils \
   pkg-config \
   python3 \
-  nodejs-lts \
+  nodejs \
   getconf \
   git-lfs \
-  bash-completion man
+  bash-completion man \
+  termux-api proot-distro proot ripgrep jq
 
 pkg update
 pkg upgrade -y
 
-npm config set python python3
-node -v
+# Also see: https://github.com/ferrumclaudepilgrim/claude-code-android
 
-cp -vr --interactive \
+# npm config set python python3
+# node -v
+
+cp -vr \
   .config \
   .ssh \
   .zshrc \
@@ -51,7 +55,7 @@ cp -vr --interactive \
   .zsh_history \
   ~/
 
-cp -vr --interactive \
+cp -vr \
   .termux \
   ~/.termux/
 
@@ -73,3 +77,5 @@ cp -vr --interactive \
 # pkg install glibc-repo -y
 
 enable_and_start_service_sshd
+
+chsh -s zsh $(whoami)

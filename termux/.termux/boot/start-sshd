@@ -2,4 +2,4 @@
 termux-wake-lock
 . $PREFIX/etc/profile
 # Not sure about this ...
-ssh
+sshd
