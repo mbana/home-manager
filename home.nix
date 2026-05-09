@@ -113,6 +113,7 @@
     # Kubernetes.
     kubectl
     kubernetes-helm
+    kind
     k9s
     
     sqlite
