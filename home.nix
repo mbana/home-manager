@@ -109,6 +109,11 @@
     # rustc
     # cargo
     # python3
+
+    # Kubernetes.
+    kubectl
+    kubernetes-helm
+    k9s
     
     sqlite
 
@@ -196,6 +201,7 @@
 
   # For Claude, Rust and Go stuff.
   home.sessionPath = [
+    "$HOME/bin"
     "$HOME/.local/bin"
     "$HOME/.cargo/env"
     "$HOME/go/bin"
@@ -419,6 +425,4 @@
       };
     };
   };
-
-
 }
