@@ -3,8 +3,8 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "mbana";
-  home.homeDirectory = "/home/mbana";
+  home.username = builtins.getEnv "USER";
+  home.homeDirectory = builtins.getEnv "HOME";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -51,6 +51,12 @@
     '';
   
     # https://github.com/nix-community/home-manager/issues/3090#issuecomment-3341948190
+    ".ssh/id_ed25519.pub".text = ''
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDGRM+2Fne1yndOyeDWjRwlC2fuyISc3iQSQMRorN61 Mohamed Bana <mohamed.omar.bana@gmail.com>
+    '';
+    ".ssh/authorized_keys".text = ''
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDGRM+2Fne1yndOyeDWjRwlC2fuyISc3iQSQMRorN61 Mohamed Bana <mohamed.omar.bana@gmail.com>
+    '';
   };
 
   # Enable fontconfig to manage fonts.
@@ -384,6 +390,8 @@
   programs.ssh = {
     enable = true;
     matchBlocks = {
+      "*".identityFile = "~/.ssh/id_ed25519";
+      "*".forwardAgent = true;
       # amd64.nebius.bana.io
       "nebius.bana.io" = {
         hostname = "66.201.4.153";
@@ -426,4 +434,13 @@
       };
     };
   };
+
+  # Specific case for Android AVF, which doesn't support hostname configuration
+  # and just returns "localhost" for the hostname.
+  # (if builtins.getEnv "USER" == "droid" then {
+    # networking.hostName = "droid";
+  # } else {
+  #   # Do not set the hostname, let it be whatever the system's hostname is
+  #   # (e.g., from DHCP or mDNS).
+  # })
 }

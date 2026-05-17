@@ -27,7 +27,7 @@ Then start a new shell or optionally just reboot ☺.
 ## Rust
 
 ```sh
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path -y
 echo '. "${HOME}/.cargo/env"' | tee -a ~/.zprofile | tee -a ~/.profile
 ```
 
