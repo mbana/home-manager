@@ -181,8 +181,9 @@
     # For https://blog.bana.io
     hugo
 
-    # AI tools
-    claude-code
+    # Uncomment if needed.
+    # # AI tools
+    # claude-code
   ];
 
   # Home Manager can also manage your environment variables through
