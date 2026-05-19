@@ -50,13 +50,13 @@
       set startup-quietly on
     '';
   
-    # https://github.com/nix-community/home-manager/issues/3090#issuecomment-3341948190
-    ".ssh/id_ed25519.pub".text = ''
-      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDGRM+2Fne1yndOyeDWjRwlC2fuyISc3iQSQMRorN61 Mohamed Bana <mohamed.omar.bana@gmail.com>
-    '';
-    ".ssh/authorized_keys".text = ''
-      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDGRM+2Fne1yndOyeDWjRwlC2fuyISc3iQSQMRorN61 Mohamed Bana <mohamed.omar.bana@gmail.com>
-    '';
+    # # https://github.com/nix-community/home-manager/issues/3090#issuecomment-3341948190
+    # ".ssh/id_ed25519.pub".text = ''
+    #   ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDGRM+2Fne1yndOyeDWjRwlC2fuyISc3iQSQMRorN61 Mohamed Bana <mohamed.omar.bana@gmail.com>
+    # '';
+    # ".ssh/authorized_keys".text = ''
+    #   ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDGRM+2Fne1yndOyeDWjRwlC2fuyISc3iQSQMRorN61 Mohamed Bana <mohamed.omar.bana@gmail.com>
+    # '';
   };
 
   # Enable fontconfig to manage fonts.
