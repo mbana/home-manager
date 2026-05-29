@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  pkgsUnstable = import <nixpkgs-unstable> {};
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -14,7 +17,8 @@
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   # home.stateVersion = "24.05"; # Please read the comment before changing.
-  home.stateVersion = "25.11"; # Please read the comment before changing.
+  #home.stateVersion = "25.11"; # Please read the comment before changing.
+  home.stateVersion = "26.05"; # Please read the comment before changing.
 
   # Allow unfree packages
   nixpkgs.config.allowUnfreePredicate = (pkg: true);
@@ -151,7 +155,6 @@
 
     # System information tools
     screenfetch
-    neofetch
 
     # Comrpession tools
     zip
@@ -178,8 +181,9 @@
     # Git
     gh
 
-    # For https://blog.bana.io
-    hugo
+    # For https://blog.bana.io, otherwise we get the below error:
+    # `WARN  Module "github.com/CaiJimmy/hugo-theme-stack/v4" is not compatible with this Hugo version: Min 0.157.0 extended; run "hugo mod graph" for more information.`
+    pkgsUnstable.hugo
 
     # Uncomment if needed.
     # # AI tools
@@ -390,48 +394,52 @@
 
   programs.ssh = {
     enable = true;
-    matchBlocks = {
-      "*".identityFile = "~/.ssh/id_ed25519";
-      "*".forwardAgent = true;
+    enableDefaultConfig = false;
+    settings = {
+      "*" = {
+        IdentityFile = "~/.ssh/id_ed25519";
+        ForwardAgent = true;
+      };
       # amd64.nebius.bana.io
       "nebius.bana.io" = {
-        hostname = "66.201.4.153";
-        user = "mbana";
-        identityFile = "~/.ssh/id_ed25519";
-        forwardAgent = true;
+        HostName = "66.201.4.153";
+        User = "mbana";
+        IdentityFile = "~/.ssh/id_ed25519";
+        ForwardAgent = true;
         # serverAliveInterval = 60;
       };
       # arm64.oci.bana.io
       "oci.bana.io" = {
-        hostname = "143.47.251.74";
-        user = "mbana";
-        identityFile = "~/.ssh/id_ed25519";
-        forwardAgent = true;
+        HostName = "143.47.251.74";
+        User = "mbana";
+        IdentityFile = "~/.ssh/id_ed25519";
+        ForwardAgent = true;
       };
       # amd64.scw.bana.io
       "scw.bana.io" = {
-        # hostname = "2001:bc8:710:f64c:dc00:ff:fec8:5b5";
-        hostname = "d614f050-2738-46f6-a4d7-68a4fea9633d.pub.instances.scw.cloud";
-        user = "mbana";
-        identityFile = "~/.ssh/id_ed25519";
-        forwardAgent = true;
+        # HostName = "2001:bc8:710:f64c:dc00:ff:fec8:5b5";
+        HostName = "d614f050-2738-46f6-a4d7-68a4fea9633d.pub.instances.scw.cloud";
+        User = "mbana";
+        IdentityFile = "~/.ssh/id_ed25519";
+        ForwardAgent = true;
       };
 
       # Local stuff on same network
       "dock-sabrent" = {
-        hostname = "10.0.0.2";
-        user = "mbana";
-        identityFile = "~/.ssh/id_ed25519";
+        HostName = "10.0.0.2";
+        User = "mbana";
+        IdentityFile = "~/.ssh/id_ed25519";
+        ForwardAgent = true;
       };
       "dock-kiwee" = {
-        hostname = "10.0.0.3";
-        user = "mbana";
-        identityFile = "~/.ssh/id_ed25519";
+        HostName = "10.0.0.3";
+        User = "mbana";
+        IdentityFile = "~/.ssh/id_ed25519";
       };
       "mbana-zenbook-14" = {
-        hostname = "10.0.0.4";
-        user = "mbana";
-        identityFile = "~/.ssh/id_ed25519";
+        HostName = "10.0.0.4";
+        User = "mbana";
+        IdentityFile = "~/.ssh/id_ed25519";
       };
     };
   };

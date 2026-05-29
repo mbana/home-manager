@@ -5,13 +5,17 @@ Nix Home Manager configuration, see <https://nix-community.github.io/home-manage
 ## Get and Configure
 
 ```sh
-sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
-. ~/.nix-profile/etc/profile.d/nix.sh
-echo 'if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi # added by mbana installer' | tee -a ~/.zprofile
-nix-channel --add https://nixos.org/channels/nixos-25.11 nixpkgs
-nix-channel --add https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz home-manager
-nix-channel --list
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
+# restart shell or reboot
+exit
+```
+
+```sh
+nix-channel --add https://nixos.org/channels/nixos-26.05 nixpkgs
+nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-26.05.tar.gz home-manager
 nix-channel --update
+nix-channel --list
 nix-shell '<home-manager>' -A install
 mkdir -pv ~/dev/github/mbana
 cd ~/dev/github/mbana
@@ -20,6 +24,8 @@ cd ~/dev/github/mbana/home-manager
 ln -sfv $(pwd)/home.nix ~/.config/home-manager/home.nix
 home-manager switch
 sudo chsh --shell $(which zsh) $(whoami)
+atuin login --username 'mbana' --key="${ATUIN_KEY}"
+atuin sync
 ```
 
 Then start a new shell or optionally just reboot ☺.
