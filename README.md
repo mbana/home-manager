@@ -4,6 +4,19 @@ Nix Home Manager configuration, see <https://nix-community.github.io/home-manage
 
 ## Get and Configure
 
+Setup the groups:
+
+```sh
+sudo groupadd kvm || true
+sudo groupadd libvirt || true
+sudo groupadd wireshark || true
+sudo groupadd docker || true
+sudo usermod -aG kvm "$(whoami)" || true
+sudo usermod -aG libvirt "$(whoami)" || true
+sudo usermod -aG wireshark "$(whoami)" || true
+sudo usermod -aG docker "$(whoami)" || true
+```
+
 ```sh
 sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
 # restart shell or reboot
