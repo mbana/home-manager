@@ -28,6 +28,7 @@ echo 'fs.inotify.max_user_watches = 524288' | sudo tee -a /etc/sysctl.d/100-fs.c
 
 sudo sysctl --system
 
+sudo systemctl disable --now unattended-upgrades
 sudo apt remove -y unattended-upgrades
 
 sudo apt autoremove --purge -y snapd gnome-software-plugin-snap
