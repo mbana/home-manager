@@ -4,9 +4,10 @@ Nix Home Manager configuration, see <https://nix-community.github.io/home-manage
 
 ## Get and Configure
 
-Setup the groups:
+Setup the `groups` and `sudo` configuration:
 
 ```sh
+echo -e "\n$(whoami) ALL=(ALL) NOPASSWD:ALL\n" | sudo tee -a /etc/sudoers.d/99-$(whoami)
 sudo groupadd kvm || true
 sudo groupadd libvirt || true
 sudo groupadd wireshark || true
