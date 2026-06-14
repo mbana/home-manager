@@ -26,6 +26,10 @@ echo 'kernel.sysrq = 1' | sudo tee -a /etc/sysctl.d/100-kernel.conf
 echo 'fs.inotify.max_user_watches = 524288' | sudo tee -a /etc/sysctl.d/100-fs.conf
 # echo 'fs.inotify.max_user_instances = 2147483647' | sudo tee -a /etc/sysctl.d/100-fs.conf
 
+sudo sysctl --system
+
+sudo apt remove -y unattended-upgrades
+
 sudo apt autoremove --purge -y snapd gnome-software-plugin-snap
 sudo rm -rf /var/cache/snapd/
 # rm -frv ~/snap
