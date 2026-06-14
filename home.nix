@@ -82,6 +82,7 @@ in
     coreutils
     moreutils
     tree
+    findutils
 
     rclone
     rsync
@@ -152,7 +153,7 @@ in
     traceroute
     tshark
     dnsutils
-
+    unixtools.netstat
 
     tailscale
 
