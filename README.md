@@ -4,18 +4,39 @@ Nix Home Manager configuration, see <https://nix-community.github.io/home-manage
 
 ## Get and Configure
 
-Setup the `groups` and `sudo` configuration:
+Initial setup:
 
 ```sh
 echo -e "\n$(whoami) ALL=(ALL) NOPASSWD:ALL\n" | sudo tee -a /etc/sudoers.d/99-$(whoami)
-sudo groupadd kvm || true
-sudo groupadd libvirt || true
-sudo groupadd wireshark || true
-sudo groupadd docker || true
-sudo usermod -aG kvm "$(whoami)" || true
-sudo usermod -aG libvirt "$(whoami)" || true
-sudo usermod -aG wireshark "$(whoami)" || true
-sudo usermod -aG docker "$(whoami)" || true
+```
+
+Misc. setup:
+
+```sh
+echo '# Disable IPv6' | sudo tee -a /etc/sysctl.d/100-ipv6.conf
+echo 'net.ipv6.conf.all.disable_ipv6 = 1' | sudo tee -a /etc/sysctl.d/100-ipv6.conf
+echo 'net.ipv6.conf.default.disable_ipv6 = 1' | sudo tee -a /etc/sysctl.d/100-ipv6.conf
+echo 'net.ipv6.conf.lo.disable_ipv6 = 1' | sudo tee -a /etc/sysctl.d/100-ipv6.conf
+
+echo 'fs.inotify.max_user_watches = 524288' | sudo tee -a /etc/sysctl.d/100-fs.conf
+echo 'kernel.dmesg_restrict = 0' | sudo tee -a /etc/sysctl.d/100-kernel.conf
+echo 'kernel.sysrq = 1' | sudo tee -a /etc/sysctl.d/100-kernel.conf
+
+# Initially it was `2147483647`.
+echo 'fs.inotify.max_user_watches = 524288' | sudo tee -a /etc/sysctl.d/100-fs.conf
+# echo 'fs.inotify.max_user_instances = 2147483647' | sudo tee -a /etc/sysctl.d/100-fs.conf
+
+sudo apt autoremove --purge -y snapd gnome-software-plugin-snap
+sudo rm -rf /var/cache/snapd/
+# rm -frv ~/snap
+# sudo apt-mark hold snapd
+```
+
+Setup the `groups` and `sudo` configuration:
+
+```sh
+echo kvm libvirt wireshark docker | xargs -n 1 sudo groupadd
+sudo usermod --append --groups kvm,libvirt,wireshark,docker "$(whoami)"
 ```
 
 ```sh
