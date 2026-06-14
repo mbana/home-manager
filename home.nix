@@ -294,10 +294,14 @@ in
       # copy = "xclip -selection clipboard";
       # paste = "xclip -o -selection clipboard";
 
+      sudoroot = "sudo --preserve-env=\"$(env|cut -f1 -d=|tr '\n' ,)\" env ";
+      suroot = "sudo --preserve-env=\"$(env|cut -f1 -d=|tr '\n' ,)\" su --preserve-environment";
+      #suroot = "sudo --preserve-env su --preserve-environment --chdir='$(pwd)'";
+
       ip = "ip --color";
 
       ls = "ls --color=auto";
-      ll = "ls -alh --color=auto";
+      ll = "ls -alh --color=auto -t";
       grep = "grep --color=auto";
 
       # fd = "fd --hidden --follow --exclude /proc --exclude /sys --exclude $(go env GOPATH)";
@@ -312,8 +316,8 @@ in
 
       # Navigation
       ".." = "cd ..";
-      "..." = "cd ../..";
-      "...." = "cd ../../..";
+      "...." = "cd ../..";
+      "........" = "cd ../../..";
 
       # Misc.
       mkdir = "mkdir -pv";
