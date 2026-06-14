@@ -141,6 +141,7 @@ in
     htop
     btop
     # glances
+    powertop
 
     # Networking stuff
     nmap
@@ -150,6 +151,8 @@ in
     netcat
     traceroute
     tshark
+    dnsutils
+
 
     tailscale
 
