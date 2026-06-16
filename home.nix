@@ -342,6 +342,8 @@ in
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
+    # Sometimes a command times out ... a slow SSD perhaps? I'm not sure.
+    command_timeout = 1000;
     # Configuration written to ~/.config/starship.toml
     settings = {
       ## "$schema" = "https://starship.rs/config-schema.json";
