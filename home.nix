@@ -342,12 +342,12 @@ in
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-    # Sometimes a command times out ... a slow SSD perhaps? I'm not sure.
-    # [WARN] - (starship::context): Scanning current directory timed out.
-    # [WARN] - (starship::context): You can set scan_timeout in your config to a higher value to allow longer-running scans to keep executing.
-    scan_timeout = 4000;
     # Configuration written to ~/.config/starship.toml
     settings = {
+      # Sometimes a command times out ... a slow SSD perhaps? I'm not sure.
+      # [WARN] - (starship::context): Scanning current directory timed out.
+      # [WARN] - (starship::context): You can set scan_timeout in your config to a higher value to allow longer-running scans to keep executing.
+      scan_timeout = 4000;
       ## "$schema" = "https://starship.rs/config-schema.json";
       ##
       ##add_newline = true;
