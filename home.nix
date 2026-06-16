@@ -16,8 +16,6 @@ in
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  # home.stateVersion = "24.05"; # Please read the comment before changing.
-  #home.stateVersion = "25.11"; # Please read the comment before changing.
   home.stateVersion = "26.05"; # Please read the comment before changing.
 
   # Allow unfree packages
@@ -31,28 +29,10 @@ in
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
 
+    ".wezterm.lua".source = dotfiles/.wezterm.lua;
+    ".gdbinit".source = dotfiles/.gdbinit;
     # Will allow us to install global npm packages without sudo and without polluting the Nix store, and also to have a consistent location for npm global packages across different machines. E.g., `npm install --global @openai/codex` will install it to `~/.npm-global/bin`.
-    ".npmrc".text = ''
-      prefix=~/.npm-global
-    '';
-
-    ".gdbinit".text = ''
-      set debuginfod enabled on
-
-      set confirm off
-      set verbose on
-
-      set print pretty on
-      set print object on
-      set print static-members on
-
-      set history save on
-      set history size unlimited
-      set history filename ~/.gdb_history
-
-      set pagination off
-      set startup-quietly on
-    '';
+    ".npmrc".source = dotfiles/.npmrc;
   
     # # https://github.com/nix-community/home-manager/issues/3090#issuecomment-3341948190
     # ".ssh/id_ed25519.pub".text = ''
@@ -192,6 +172,8 @@ in
     # Uncomment if needed.
     # # AI tools
     # claude-code
+
+    wezterm
   ];
 
   # Home Manager can also manage your environment variables through
@@ -219,9 +201,9 @@ in
   home.sessionPath = [
     "$HOME/bin"
     "$HOME/.local/bin"
-    "$HOME/.cargo/env"
-    "$HOME/go/bin"
     "$HOME/.npm-global/bin"
+    "$HOME/go/bin"
+    "$HOME/.cargo/env"
   ];
 
   # Let Home Manager install and manage itself.
@@ -451,13 +433,4 @@ in
       };
     };
   };
-
-  # Specific case for Android AVF, which doesn't support hostname configuration
-  # and just returns "localhost" for the hostname.
-  # (if builtins.getEnv "USER" == "droid" then {
-    # networking.hostName = "droid";
-  # } else {
-  #   # Do not set the hostname, let it be whatever the system's hostname is
-  #   # (e.g., from DHCP or mDNS).
-  # })
 }

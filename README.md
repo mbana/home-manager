@@ -6,7 +6,7 @@ Nix Home Manager configuration, see <https://nix-community.github.io/home-manage
 
 ```sh
 sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
-# restart shell, reboot or logout an log back in.
+# restart shell, reboot, logout an log back in or start a new shell.
 exit
 ```
 
@@ -40,10 +40,4 @@ Replace `ATUIN_KEY` below with an actual valid key:
 ```sh
 atuin login --username 'mbana' --key="${ATUIN_KEY}"
 atuin sync
-```
-
-## Updating
-
-```sh
-$ home-manager-switch
 ```
