@@ -57,7 +57,7 @@ sudo mv -v /lib/systemd/system/apt-daily-upgrade.service /lib/systemd/system/apt
 sudo mv -v /lib/systemd/system/apt-daily-upgrade.timer /lib/systemd/system/apt-daily-upgrade.timer.DISABLED
 
 # Remove snap/snapd
-sudo apt autoremove --purge -y snapd gnome-software-plugin-snap
+sudo apt remove --purge snapd gnome-software-plugin-snap
 sudo rm -rfv /var/cache/snapd/
 rm -frv ~/snap
 # sudo apt-mark hold snapd
@@ -68,6 +68,7 @@ rm -frv ~/snap
 ```sh
 sudo apt install debuginfod gdb llvm lldb
 echo 'kernel.randomize_va_space = 0' | sudo tee -a /etc/sysctl.d/100-kernel.conf
+echo 'unqualified-search-registries = ["docker.io"]' | sudo tee -a /etc/containers/registries.conf.d/10-unqualified-search-registries.conf
 ```
 
 ## Notes
