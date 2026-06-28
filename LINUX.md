@@ -63,6 +63,13 @@ rm -frv ~/snap
 # sudo apt-mark hold snapd
 ```
 
+## Developers
+
+```sh
+sudo apt install debuginfod gdb llvm lldb
+echo 'kernel.randomize_va_space = 0' | sudo tee -a /etc/sysctl.d/100-kernel.conf
+```
+
 ## Notes
 
 * For commands that require `sudo` run `sudo $(which bpftop)` as `--preserve-env` is not supported by `sudo-rs` at the moment, which Ubuntu will soon switch to, see: <https://github.com/trifectatechfoundation/sudo-rs/issues/1299> for more information.
