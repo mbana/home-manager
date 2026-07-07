@@ -17,7 +17,7 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/release-
 nix-channel --update
 nix-shell '<home-manager>' -A install
 mkdir -pv ~/dev/github/mbana
-git clone https://github.com/mbana/home-manager.git ~/dev/github/mbana
+git clone https://github.com/mbana/home-manager.git ~/dev/github/mbana/home-manager
 cd ~/dev/github/mbana/home-manager
 ln -sfv $(pwd)/home.nix ~/.config/home-manager/home.nix
 home-manager switch
