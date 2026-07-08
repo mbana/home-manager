@@ -55,6 +55,9 @@ in
     wget
     tmux
     zellij
+
+    shfmt
+    shellcheck
   
     vim
     neovim
@@ -117,6 +120,7 @@ in
     strace
 
     jq
+    yq
 
     bottom
     htop
