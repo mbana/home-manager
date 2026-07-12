@@ -47,38 +47,42 @@ in
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    iosevka
-    fira-sans
-
+    zsh
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-history-substring-search
+    shfmt
+    shellcheck
+    asciinema
     curl
     git
     wget
     tmux
     zellij
-
-    shfmt
-    shellcheck
   
     vim
     neovim
 
     coreutils
-    moreutils
-    tree
     findutils
-
+    # binutils # conflicts with `clang` because both provide `ld.gold`.
+    moreutils
+    gnupg
+    curl
+    wget
+    watch
     rclone
     rsync
+    restic
 
-    zsh
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    zsh-history-substring-search
-
-    # nix-locate
+    # Nix stuff:
     nix-zsh-completions
+    statix
+    nix-diff
+    nix-index
+    # nix-locate
 
-    # Rust tools/stuff
+    # Rust tools/stuff:
     # https://zaiste.net/posts/shell-commands-rust/
     bat
     fd
@@ -96,19 +100,35 @@ in
     delta
     lsd
     atuin
+    hexyl
+    difftastic
+    tealdeer
+    duf
+    watchexec
+    just
+    delta
+    hgrep
+    eza
 
     go
+    gopls
+    gofumpt
+    delve
+    golangci-lint
+
     delve
     nodejs
     # rustc
     # cargo
     # python3
 
-    # Kubernetes.
+    # Kubernetes:
     kubectl
     kubernetes-helm
     kind
     k9s
+    stern
+    docker-compose
     
     sqlite
 
@@ -123,28 +143,35 @@ in
     yq
 
     bottom
+    pstree
+    tree
     htop
     btop
     # glances
     powertop
 
-    # Networking stuff
+    # Networking stuff:
     nmap
     tcpdump
-    # wireshark
     socat
     netcat
     traceroute
     tshark
     dnsutils
     unixtools.netstat
-
+    gping
+    bandwhich
+    mtr
+    iftop
+    # wireshark
+    wireshark-cli
+    sshpass
     tailscale
 
-    # System information tools
+    # System information tools:
     screenfetch
 
-    # Comrpession tools
+    # Comrpession tools:
     zip
     unzip
     p7zip
@@ -153,8 +180,9 @@ in
     zstd
     gzip
     bzip2
+    p7zip
 
-    # eBPF tools
+    # eBPF tools:
     bpf-linker
     bpftrace
     bpftools
@@ -166,17 +194,21 @@ in
     bcc
     pwru
 
-    # Git
+    # Git:
     gh
 
     # For https://blog.bana.io, otherwise we get the below error:
     # `WARN  Module "github.com/CaiJimmy/hugo-theme-stack/v4" is not compatible with this Hugo version: Min 0.157.0 extended; run "hugo mod graph" for more information.`
     pkgsUnstable.hugo
 
-    # Uncomment if needed.
-    # # AI tools
+    # AI tools:
     # claude-code
 
+    # Fonts:
+    iosevka
+    fira-sans
+
+    # Terminal:
     wezterm
   ];
 
