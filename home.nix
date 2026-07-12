@@ -67,6 +67,7 @@ in
     findutils
     # binutils # conflicts with `clang` because both provide `ld.gold`.
     moreutils
+    plocate
     gnupg
     curl
     wget
