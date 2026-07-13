@@ -153,6 +153,7 @@ in
 
     # Networking stuff:
     nmap
+    arp-scan
     tcpdump
     socat
     netcat
