@@ -5,7 +5,7 @@ From Termux run:
 ```sh
 export PACKAGES="busybox"
 yes | termux-setup-storage -y
-curl -sL 'https://github.com/mbana/home-manager/blob/main/bin/android/scripts/get-packages.sh?raw=true' | bash -i -s "${PACKAGES}"
+curl -sL 'https://github.com/mbana/home-manager/raw/refs/heads/main/bin/android/scripts/get-packages.sh' | bash -i -s "${PACKAGES}"
 cp -fv "build/${PACKAGES}.zip" "/sdcard/${PACKAGES}.zip"
 ```
 
