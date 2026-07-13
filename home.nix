@@ -21,6 +21,9 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfreePredicate = (pkg: true);
 
+  # Auto accept Android SDK licenses
+  nixpkgs.config.android_sdk.accept_license = true;
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -29,10 +32,14 @@ in
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
 
-    ".wezterm.lua".source = dotfiles/.wezterm.lua;
-    ".gdbinit".source = dotfiles/.gdbinit;
+    ".android/" = {
+      source = ./dotfiles/.android;
+      recursive = true;
+    };
+    ".wezterm.lua".source = ./dotfiles/.wezterm.lua;
+    ".gdbinit".source = ./dotfiles/.gdbinit;
     # Will allow us to install global npm packages without sudo and without polluting the Nix store, and also to have a consistent location for npm global packages across different machines. E.g., `npm install --global @openai/codex` will install it to `~/.npm-global/bin`.
-    ".npmrc".source = dotfiles/.npmrc;
+    ".npmrc".source = ./dotfiles/.npmrc;
   
     # # https://github.com/nix-community/home-manager/issues/3090#issuecomment-3341948190
     # ".ssh/id_ed25519.pub".text = ''
@@ -81,6 +88,7 @@ in
     statix
     nix-diff
     nix-index
+    nixfmt
     # nix-locate
 
     # Rust tools/stuff:
@@ -212,6 +220,16 @@ in
 
     # Terminal:
     wezterm
+
+    # Android:
+    android-tools
+    # androidsdk
+    # androidenv.androidPkgs.tools
+    # androidenv.androidPkgs.ndk-bundle
+    # androidenv.androidPkgs.androidsdk
+    # androidenv.androidPkgs.platform-tools
+
+    # Microcontrollers:
   ];
 
   # Home Manager can also manage your environment variables through
