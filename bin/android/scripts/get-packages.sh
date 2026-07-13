@@ -1,9 +1,12 @@
-#!/system/bin/sh
+#!/bin/sh
 # From: https://github.com/HunterXProgrammer/Tasker-MdtestV5/blob/main/res/build_dynamic.sh?raw=true
-set -xv
+set -x
+
+pkg update -y
+pkg upgrade -y
 
 if [ -n "$TERMUX_VERSION" ]; then
-	apt update -y
+	pkg update -y
 else
 	echo "This script should run on Termux"
 	exit 1
@@ -11,7 +14,7 @@ fi
 
 yes | pkg install -y p7zip ldd binutils command-not-found tur-repo root-repo x11-repo llvm
 
-mkdir -pv "build"
+mkdir -pv "build" || echo 'already exists'
 cd build
 
 PACKAGE_SCRIPT="$(curl -Ls 'https://github.com/mbana/home-manager/blob/main/bin/android/scripts/package.sh?raw=true')"
@@ -42,14 +45,14 @@ for package in "$@"; do
 		fi
 		if [ "$IS_VALID" = "true" ]; then
 			echo "$PACKAGE_SCRIPT" >"$package"
-			cp -L "$(command -v "$package")" "${package}.bin"
-			mkdir -p "lib-$package"
+			cp -Lv "$(command -v "$package")" "${package}.bin"
+			mkdir -pv "lib-$package"
 			echo -e "\n  Getting dependencies..."
 			for libpath in $(ldd "$(command -v "$package")" | grep -F "/data/data/com.termux/" | sed "s/.* \//\//" | sed "s/ .*//"); do
-				cp -L "$libpath" "lib-$package"
+				cp -Lv "$libpath" "lib-$package"
 			done
 			echo -e "\n  Zipping package..."
-			chmod 755 "$package" "${package}.bin"
+			chmod -v 755 "$package" "${package}.bin"
 			chmod -R 755 "lib-$package"
 			7z a -tzip -mx=9 -bd -bso0 "${package}.zip" "$package" "${package}.bin" "lib-$package"
 		else

@@ -1,6 +1,4 @@
-#!/system/bin/sh
-set -xv
-
+#!/bin/sh
 dir="$(
 	cd "$(dirname "$0")"
 	pwd
