@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-scp ./fstab root@192.168.1.1:/etc/config/fstab
-scp ./network root@192.168.1.1:/etc/config/network
-scp ./wireless root@192.168.1.1:/etc/config/wireless
-scp ./system root@192.168.1.1:/etc/config/system
-scp ./dhcp root@192.168.1.1:/etc/config/dhcp
+scp ./config/fstab root@192.168.1.1:/etc/config/fstab
+scp ./config/network root@192.168.1.1:/etc/config/network
+scp ./config/wireless root@192.168.1.1:/etc/config/wireless
+scp ./config/system root@192.168.1.1:/etc/config/system
+scp ./config/dhcp root@192.168.1.1:/etc/config/dhcp
 
 ssh root@192.168.1.1 << EOF
 uci commit network
@@ -36,10 +36,13 @@ uci commit dropbear
 /etc/init.d/sshd restart
 EOF
 
+echo "Waiting for OpenWrt to restart..."
+sleep 8
+
 scp -r ./root root@192.168.1.1:/
 
-# Disable IPv6
-uci set network.lan.ipv6='0'
-uci set network.lan.ip6assign='0'
-uci commit network
-/etc/init.d/network restart
+# # Disable IPv6
+# uci set network.lan.ipv6='0'
+# uci set network.lan.ip6assign='0'
+# uci commit network
+# /etc/init.d/network restart
