@@ -449,6 +449,7 @@ in
       "*" = {
         IdentityFile = "~/.ssh/id_ed25519";
         ForwardAgent = true;
+	      StrictHostKeyChecking = "no";
       };
       # amd64.nebius.bana.io
       "nebius.bana.io" = {

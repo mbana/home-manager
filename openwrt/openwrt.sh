@@ -12,7 +12,12 @@ uci commit wireless
 uci commit system
 uci commit dhcp
 uci commit fstab
-reboot
+uci commit
+/etc/init.d/network restart
+/etc/init.d/wireless restart
+/etc/init.d/system restart
+/etc/init.d/dhcp restart
+/etc/init.d/fstab restart
 EOF
 
 ssh root@192.168.1.1 << EOF
@@ -33,3 +38,8 @@ EOF
 
 scp -r ./root root@192.168.1.1:/
 
+# Disable IPv6
+uci set network.lan.ipv6='0'
+uci set network.lan.ip6assign='0'
+uci commit network
+/etc/init.d/network restart
