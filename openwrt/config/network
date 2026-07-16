@@ -1,0 +1,71 @@
+# /etc/config/network
+
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fd05:af69:dc21::/48'
+	option packet_steering '1'
+
+config device
+	option name 'br-lan'
+	option type 'bridge'
+	option igmp_snooping '1'
+	list ports 'lan0'
+	list ports 'lan2'
+	list ports 'lan3'
+	list ports 'mxl_lan0'
+	list ports 'mxl_lan1'
+	list ports 'mxl_lan2'
+	list ports 'mxl_lan3'
+	list ports 'mxl_lan5'
+
+config interface 'lan'
+	option device 'br-lan'
+	option proto 'static'
+	option ipaddr '192.168.1.1'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+
+config device
+	option name 'br-wan'
+	option type 'bridge'
+	list ports 'eth1'
+
+config interface 'wan'
+	option device 'br-wan'
+	option proto 'static'
+	option ipaddr '178.255.93.241'
+	option netmask '255.255.255.254'
+	option gateway '178.255.93.240'
+	list dns '188.215.74.252'
+	list dns '1.1.1.1'
+	list dns '8.8.8.8'
+
+config interface 'wan6'
+	option device 'br-wan'
+	option proto 'dhcpv6'
+
+config interface 'WWAN'
+	option proto 'dhcp'
+	option device 'usb0'
+
+config interface 'WWAN6'
+	option proto 'dhcpv6'
+	option device 'usb0'
+	option reqaddress 'try'
+	option reqprefix 'auto'
+
+config interface 'WWAN_Q'
+	option proto 'dhcp'
+	option device 'wwan0_1'
+
+config interface 'WWAN6_Q'
+	option proto 'dhcpv6'
+	option device 'wwan0_1'
+	option reqaddress 'try'
+	option reqprefix 'auto'
+
