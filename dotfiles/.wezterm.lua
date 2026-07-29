@@ -1,8 +1,9 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
-config.default_prog = { 'wsl.exe', '--cd', '~' }
-config.default_domain = 'WSL:Ubuntu-24.04'
+-- TODO: Only do this if on Windows.
+-- config.default_prog = { 'wsl.exe', '--cd', '~' }
+-- config.default_domain = 'WSL:Ubuntu-24.04'
 
 config.front_end = 'WebGpu'
 config.webgpu_power_preference = 'HighPerformance'

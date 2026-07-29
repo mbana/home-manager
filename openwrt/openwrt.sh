@@ -40,6 +40,7 @@ echo "Waiting for OpenWrt to restart..."
 sleep 8
 
 scp -r ./root root@192.168.1.1:/
+ssh root@192.168.1.1 'chmod 600 /root'
 
 # # Disable IPv6
 # uci set network.lan.ipv6='0'

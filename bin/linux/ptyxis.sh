@@ -6,6 +6,9 @@
 #   // "terminal.external.linuxExec": "/usr/bin/ptyxis",
 #   // "terminal.external.linuxExec": "x-terminal-emulator",
 
+# #!/usr/bin/env sh
+# /usr/bin/ptyxis --new-window --standalone
+
 # https://github.com/microsoft/vscode/issues/179958
 # GTK_PATH="" x-terminal-emulator $@
 
