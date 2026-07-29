@@ -4,7 +4,7 @@
 
 ```
 MT7988> printenv
-
+...
 setenv bootconf_extra mt7988a-bananapi-bpi-r4-pro-4e-sfp
 setenv bootargs 'console=ttyS0,115200n1 pci=pcie_bus_perf root=/dev/fit0 rootwait ipv6.disable=1'
 saveenv
@@ -20,6 +20,10 @@ uci set network.wan.netmask='255.255.255.254'
 uci set network.wan.gateway='178.255.93.240'
 uci set network.wan.dns='1.1.1.1 8.8.8.8 188.215.74.252'
 uci commit
+# Permanent fix (survives reboot):
+mv /etc/flowtable.conf /etc/flowtable.conf.bak
+# Apply immediately without reboot:
+nft delete table inet filter
 ```
 
 ### Access XGS-PON stick

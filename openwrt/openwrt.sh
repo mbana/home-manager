@@ -14,8 +14,6 @@ uci commit
 /etc/init.d/network restart
 /etc/init.d/wireless restart
 /etc/init.d/system restart
-/etc/init.d/dhcp restart
-/etc/init.d/fstab restart
 EOF
 
 ssh root@192.168.1.1 << EOF
@@ -28,7 +26,7 @@ opkg install openssh-server openssh-sftp-server
 sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 mkdir /root/.ssh/
 cp /etc/dropbear/authorized_keys /root/.ssh/
-uci set dropbear.@dropbear[0].Port=1986
+uci set dropbear.@dropbear[0].Port=2222
 uci commit dropbear
 /etc/init.d/dropbear restart
 /etc/init.d/sshd enable
@@ -38,7 +36,10 @@ EOF
 echo "Waiting for OpenWrt to restart..."
 sleep 8
 
-scp -r ./root root@192.168.1.1:/
+scp -r ./root/.config root@192.168.1.1:/root/.config
+scp -r ./root/bin root@192.168.1.1:/root/bin
+scp -r ./root/.zshrc root@192.168.1.1:/root/.zshrc
+scp -r ./root/.zsh_history root@192.168.1.1:/root/.zsh_history
 ssh root@192.168.1.1 'chmod 600 /root'
 
 # # Disable IPv6

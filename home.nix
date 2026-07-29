@@ -435,6 +435,10 @@ in
     enable = true;
     enableZshIntegration = true;
     flags = [ "--disable-up-arrow" ]; # or --disable-ctrl-r
+    settings = {
+      # auto_sync = true;
+      sync_frequency = "1m";
+    };
   };
 
   # # Takes a very long time to index.
