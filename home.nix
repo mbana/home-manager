@@ -31,7 +31,7 @@ in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
-
+    
     ".android/" = {
       source = ./dotfiles/.android;
       recursive = true;
@@ -255,11 +255,12 @@ in
 
   # For Claude, Rust and Go stuff.
   home.sessionPath = [
+    "$HOME/.bin"
     "$HOME/bin"
     "$HOME/.local/bin"
-    "$HOME/.npm-global/bin"
     "$HOME/go/bin"
     "$HOME/.cargo/env"
+    "$HOME/.npm-global/bin"
   ];
 
   # Let Home Manager install and manage itself.
