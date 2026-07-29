@@ -10,8 +10,6 @@ ssh root@192.168.1.1 << EOF
 uci commit network
 uci commit wireless
 uci commit system
-uci commit dhcp
-uci commit fstab
 uci commit
 /etc/init.d/network restart
 /etc/init.d/wireless restart
@@ -21,6 +19,7 @@ uci commit
 EOF
 
 ssh root@192.168.1.1 << EOF
+opkg update
 opkg install ripgrep zsh tmux git gdisk strace block-mount kmod-usb-storage block-mount kmod-fs-ext4 e2fsprogs parted kmod-usb-storage usbutils kmod-fs-exfat e2fsprogs kmod-fs-ext4 f2fs-tools gcc iperf3 eza block-mount kmod-fs-ext4 e2fsprogs parted kmod-usb-storage iperf3 diffutils 
 
 # https://openwrt.org/docs/guide-user/services/ssh/openssh_instead_dropbear
