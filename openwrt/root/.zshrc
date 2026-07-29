@@ -29,8 +29,8 @@ alias -- grep='grep --color=auto'
 alias -- ip='ip --color'
 alias -- ll='ls -alh --color=auto -t'
 alias -- ls='ls --color=auto'
-alias -- rg='rg --pcre2 --glob '\''!{/proc,/sys,$(go env GOPATH),**/.git/*}'\'''
-alias -- fd='fd --absolute-path --exclude /proc --exclude /sys --exclude $(go env GOPATH) --exclude '\''**/.git/*'\'''
+alias -- rg='rg --pcre2 --glob '\''!{/proc,/sys}'\'''
+alias -- fd='fd --absolute-path --exclude /proc --exclude /sys'
 
 export STARSHIP_CONFIG=~/.starship.toml
 eval "$(starship init zsh)"
