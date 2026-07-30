@@ -32,10 +32,10 @@ in
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
     
-    ".android/" = {
-      source = ./dotfiles/.android;
-      recursive = true;
-    };
+    # ".android/" = {
+    #   source = ./dotfiles/.android;
+    #   recursive = true;
+    # };
     ".wezterm.lua".source = ./dotfiles/.wezterm.lua;
     ".gdbinit".source = ./dotfiles/.gdbinit;
     # Will allow us to install global npm packages without sudo and without polluting the Nix store, and also to have a consistent location for npm global packages across different machines. E.g., `npm install --global @openai/codex` will install it to `~/.npm-global/bin`.
@@ -311,13 +311,13 @@ in
           ];
         };
       };
-      url = {
-        "git@gitlab.com:" = {
-          insteadOf = [
-            "https://gitlab.com/"
-          ];
-        };
-      };
+      # url = {
+      #   "git@gitlab.com:" = {
+      #     insteadOf = [
+      #       "https://gitlab.com/"
+      #     ];
+      #   };
+      # };
       alias = {
         d = "diff";
         dc = "diff --cached";
@@ -347,15 +347,9 @@ in
       ll = "ls -alh --color=auto -t";
       grep = "grep --color=auto";
 
-      # fd = "fd --hidden --follow --exclude /proc --exclude /sys --exclude $(go env GOPATH)";
-      # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),**/.git/*,**/*.rs}'";
-      # rg = "rg --follow --glob '!{/proc,/sys,$(go env GOPATH),.git,*.rs}'";
-      # fd = "fd --hidden --ignore-case --follow --no-ignore-parent --no-ignore --unrestricted --show-errors --absolute-path";
-      fd = "fd --absolute-path --exclude /proc --exclude /sys --exclude $(go env GOPATH) --exclude '**/.git/*'";
+      fd = "fd --absolute-path --exclude /proc --exclude /sys";
 
-      # rg = "rg --hidden --follow --glob-case-insensitive --ignore-case --no-ignore --no-ignore-dot --no-ignore-exclude --no-ignore-global --no-ignore-parent --no-ignore-vcs --no-require-git --text --pcre2 --pretty";
-      # rg = "rg --hidden --follow --glob-case-insensitive --ignore-case --no-ignore --pcre2 --pretty";
-      rg = "rg --pcre2 --glob '!{/proc,/sys,$(go env GOPATH),**/.git/*}'";
+      rg = "rg --pcre2 --glob '!{/proc,/sys'";
 
       # Navigation
       ".." = "cd ..";
@@ -436,7 +430,7 @@ in
     enableZshIntegration = true;
     flags = [ "--disable-up-arrow" ]; # or --disable-ctrl-r
     settings = {
-      # auto_sync = true;
+      auto_sync = true;
       sync_frequency = "1m";
     };
   };
@@ -455,6 +449,7 @@ in
         IdentityFile = "~/.ssh/id_ed25519";
         ForwardAgent = true;
 	      StrictHostKeyChecking = "no";
+        UserKnownHostsFile = "/dev/null";
       };
       # amd64.nebius.bana.io
       "nebius.bana.io" = {
