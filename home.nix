@@ -116,7 +116,9 @@ in
     watchexec
     just
     delta
-    hgrep
+    #Compiling hgrep v0.3.9 (/nix/var/nix/builds/nix-98451-3162612818/source)
+    #error: linker `aarch64-linux-gnu-gcc` not found
+    #hgrep
     eza
 
     go
