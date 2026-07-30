@@ -351,7 +351,7 @@ in
 
       fd = "fd --absolute-path --exclude /proc --exclude /sys";
 
-      rg = "rg --pcre2 --glob '!{/proc,/sys'";
+      rg = "rg --pcre2 --glob '!{/proc,/sys}'";
 
       # Navigation
       ".." = "cd ..";
