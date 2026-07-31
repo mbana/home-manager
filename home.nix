@@ -36,7 +36,7 @@ in
     #   source = ./dotfiles/.android;
     #   recursive = true;
     # };
-    ".wezterm.lua".source = ./dotfiles/.wezterm.lua;
+    # ".wezterm.lua".source = ./dotfiles/.wezterm.lua;
     ".gdbinit".source = ./dotfiles/.gdbinit;
     # Will allow us to install global npm packages without sudo and without polluting the Nix store, and also to have a consistent location for npm global packages across different machines. E.g., `npm install --global @openai/codex` will install it to `~/.npm-global/bin`.
     ".npmrc".source = ./dotfiles/.npmrc;
@@ -341,7 +341,6 @@ in
 
       sudoroot = "sudo --preserve-env=\"$(env|cut -f1 -d=|tr '\n' ,)\" env ";
       suroot = "sudo --preserve-env=\"$(env|cut -f1 -d=|tr '\n' ,)\" su --preserve-environment";
-      #suroot = "sudo --preserve-env su --preserve-environment --chdir='$(pwd)'";
 
       ip = "ip --color";
 
@@ -446,54 +445,20 @@ in
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    settings = {
-      "*" = {
-        IdentityFile = "~/.ssh/id_ed25519";
-        ForwardAgent = true;
-	      StrictHostKeyChecking = "no";
-        UserKnownHostsFile = "/dev/null";
-      };
-      # amd64.nebius.bana.io
-      "nebius.bana.io" = {
-        HostName = "66.201.4.153";
-        User = "mbana";
-        IdentityFile = "~/.ssh/id_ed25519";
-        ForwardAgent = true;
-        # serverAliveInterval = 60;
-      };
-      # arm64.oci.bana.io
-      "oci.bana.io" = {
-        HostName = "143.47.251.74";
-        User = "mbana";
-        IdentityFile = "~/.ssh/id_ed25519";
-        ForwardAgent = true;
-      };
-      # amd64.scw.bana.io
-      "scw.bana.io" = {
-        # HostName = "2001:bc8:710:f64c:dc00:ff:fec8:5b5";
-        HostName = "d614f050-2738-46f6-a4d7-68a4fea9633d.pub.instances.scw.cloud";
-        User = "mbana";
-        IdentityFile = "~/.ssh/id_ed25519";
-        ForwardAgent = true;
-      };
-
-      # Local stuff on same network
-      "dock-sabrent" = {
-        HostName = "10.0.0.2";
-        User = "mbana";
-        IdentityFile = "~/.ssh/id_ed25519";
-        ForwardAgent = true;
-      };
-      "dock-kiwee" = {
-        HostName = "10.0.0.3";
-        User = "mbana";
-        IdentityFile = "~/.ssh/id_ed25519";
-      };
-      "mbana-zenbook-14" = {
-        HostName = "10.0.0.4";
-        User = "mbana";
-        IdentityFile = "~/.ssh/id_ed25519";
-      };
-    };
+    # settings = {
+    #   "*" = {
+    #     IdentityFile = "~/.ssh/id_ed25519";
+    #     ForwardAgent = true;
+	  #     StrictHostKeyChecking = "no";
+    #     UserKnownHostsFile = "/dev/null";
+    #   };
+    #   # arm64.oci.bana.io
+    #   "oci.bana.io" = {
+    #     HostName = "143.47.251.74";
+    #     User = "mbana";
+    #     IdentityFile = "~/.ssh/id_ed25519";
+    #     ForwardAgent = true;
+    #   };
+    # };
   };
 }

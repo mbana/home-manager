@@ -30,9 +30,9 @@ uci set network.wan.netmask='255.255.255.254'
 uci set network.wan.gateway='178.255.93.240'
 uci set network.wan.dns='1.1.1.1 8.8.8.8 188.215.74.252'
 uci commit
+service network restart
 mv /etc/flowtable.conf /etc/flowtable.conf.bak # Permanent fix (survives reboot)
 nft delete table inet filter # Apply immediately without reboot
-service network restart
 ```
 
 ### Access XGS-PON stick
