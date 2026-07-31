@@ -442,23 +442,23 @@ in
   #   enableZshIntegration = true;
   # };
 
-  programs.ssh = {
-    enable = true;
-    enableDefaultConfig = false;
-    # settings = {
-    #   "*" = {
-    #     IdentityFile = "~/.ssh/id_ed25519";
-    #     ForwardAgent = true;
-	  #     StrictHostKeyChecking = "no";
-    #     UserKnownHostsFile = "/dev/null";
-    #   };
-    #   # arm64.oci.bana.io
-    #   "oci.bana.io" = {
-    #     HostName = "143.47.251.74";
-    #     User = "mbana";
-    #     IdentityFile = "~/.ssh/id_ed25519";
-    #     ForwardAgent = true;
-    #   };
-    # };
-  };
+  # programs.ssh = {
+  #   enable = true;
+  #   enableDefaultConfig = false;
+  #   # settings = {
+  #   #   "*" = {
+  #   #     IdentityFile = "~/.ssh/id_ed25519";
+  #   #     ForwardAgent = true;
+	#   #     StrictHostKeyChecking = "no";
+  #   #     UserKnownHostsFile = "/dev/null";
+  #   #   };
+  #   #   # arm64.oci.bana.io
+  #   #   "oci.bana.io" = {
+  #   #     HostName = "143.47.251.74";
+  #   #     User = "mbana";
+  #   #     IdentityFile = "~/.ssh/id_ed25519";
+  #   #     ForwardAgent = true;
+  #   #   };
+  #   # };
+  # };
 }
