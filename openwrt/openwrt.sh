@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
-# scp ./config/network root@OpenWrt:/etc/config/network
-scp ./config/system root@OpenWrt:/etc/config/system
-scp ./config/wireless root@OpenWrt:/etc/config/wireless
-scp ./config/dhcp root@OpenWrt:/etc/config/dhcp
-
 ssh root@OpenWrt << 'EOF'
+set -x
+
 PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] ' >> ~/.bashrc
 
 uci set network.wan.device='br-wan'
@@ -14,21 +11,22 @@ uci set network.wan.ipaddr='178.255.93.241'
 uci set network.wan.netmask='255.255.255.254'
 uci set network.wan.gateway='178.255.93.240'
 uci set network.wan.dns='1.1.1.1 8.8.8.8 188.215.74.252'
-mv /etc/flowtable.conf /etc/flowtable.conf.bak # Permanent fix (survives reboot)
-nft delete table inet filter # Apply immediately without reboot
+(mv /etc/flowtable.conf /etc/flowtable.conf.bak && nft delete table inet filter) || echo 'nothing to remove for /etc/flowtable.conf'
 uci commit
 
 uci commit network
 uci commit wireless
 uci commit system
 uci commit dhcp
+EOF
 
-mv /etc/flowtable.conf /etc/flowtable.conf.bak
-nft delete table inet filter
-uci commit
+ssh root@OpenWrt << 'EOF'
+set -x
+
+(mv /etc/flowtable.conf /etc/flowtable.conf.bak && nft delete table inet filter) || echo 'nothing to remove for /etc/flowtable.conf'
 
 opkg update
-opkg install ripgrep zsh tmux git gdisk strace block-mount kmod-usb-storage block-mount kmod-fs-ext4 e2fsprogs parted kmod-usb-storage usbutils kmod-fs-exfat e2fsprogs kmod-fs-ext4 f2fs-tools gcc iperf3 eza block-mount kmod-fs-ext4 e2fsprogs parted kmod-usb-storage iperf3 diffutils 
+opkg install ripgrep zsh tmux git gdisk strace block-mount kmod-usb-storage block-mount kmod-fs-ext4 e2fsprogs parted kmod-usb-storage usbutils kmod-fs-exfat e2fsprogs kmod-fs-ext4 f2fs-tools iperf3 eza block-mount kmod-fs-ext4 e2fsprogs parted kmod-usb-storage iperf3 diffutils 
 # https://openwrt.org/docs/guide-user/services/ssh/openssh_instead_dropbear
 opkg update
 opkg install openssh-server openssh-sftp-server
@@ -43,8 +41,11 @@ uci commit dropbear
 EOF
 
 ssh-copy-id root@OpenWrt
-echo "Waiting for OpenWrt to restart..."
-sleep 8
+
+# scp ./config/network root@OpenWrt:/etc/config/network
+scp ./config/system root@OpenWrt:/etc/config/system
+scp ./config/wireless root@OpenWrt:/etc/config/wireless
+scp ./config/dhcp root@OpenWrt:/etc/config/dhcp
 
 scp -r ./root/.config root@OpenWrt:/root/.config
 scp -r ./root/bin root@OpenWrt:/root/bin
@@ -52,11 +53,12 @@ scp -r ./root/.zshrc root@OpenWrt:/root/.zshrc
 scp -r ./root/.zsh_history root@OpenWrt:/root/.zsh_history
 
 ssh root@OpenWrt << 'EOF'
+set -x
 mv /etc/flowtable.conf /etc/flowtable.conf.bak
 nft delete table inet filter
 
 wifi reconf
-service network restart
+#service network restart
 service system restart
 EOF
 

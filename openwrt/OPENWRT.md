@@ -7,8 +7,8 @@
 ```
 MT7988> printenv
 ...
-setenv bootconf_extra mt7988a-bananapi-bpi-r4-pro-4e-sfp
 setenv bootargs 'console=ttyS0,115200n1 pci=pcie_bus_perf root=/dev/fit0 rootwait ipv6.disable=1'
+setenv bootconf_extra 'mt7988a-bananapi-bpi-r4-pro-4e-sfp'
 saveenv
 ```
 
