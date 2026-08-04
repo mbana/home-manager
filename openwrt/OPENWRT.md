@@ -2,6 +2,8 @@
 
 ### `uboot`
 
+### Original
+
 ```
 MT7988> printenv
 ...
@@ -9,6 +11,31 @@ setenv bootconf_extra mt7988a-bananapi-bpi-r4-pro-4e-sfp
 setenv bootargs 'console=ttyS0,115200n1 pci=pcie_bus_perf root=/dev/fit0 rootwait ipv6.disable=1'
 saveenv
 ```
+
+### Original no IPv6
+
+Remove `earlycon=uart8250,mmio32,0x11000000 ubi.block=0,firmware`:
+
+```
+bootargs=console=ttyS0,115200n1 pci=pcie_bus_perf root=/dev/fit0 rootwait nokaslr loglevel=8 earlycon=uart8250,mmio32,0x11000000 ubi.block=0,firmware ipv6.disable=1 
+```
+
+### Modified
+
+console=ttyS0,115200n1 loglevel=8  \
+			    earlycon=uart8250,mmio32,0x11000000 \
+			    pci=pcie_bus_perf ubi.block=0,firmware root=/dev/fit0 \
+			    rootwait
+
+
+```
+MT7988> printenv
+...
+setenv bootconf_extra mt7988a-bananapi-bpi-r4-pro-4e-sfp
+setenv bootargs 'console=ttyS0,115200n1 pci=pcie_bus_perf root=/dev/fit0 rootwait nokaslr loglevel=8 earlycon=uart8250,mmio32,0x11000000 ubi.block=0,firmware ipv6.disable=1 '
+saveenv
+```
+
 
 ```
 setenv bootargs_debug 'earlyprintk log_buf_len=16M print_fatal_signals=1 ignore_log_level loglevel=7 ubi.block=0,firmware reboot=k panic=1 verbose debug'
@@ -21,18 +48,31 @@ boot
 ### Router config
 
 ```sh
+PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] ' >> ~/.bashrc
+```
+
+```sh
+PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] ' >> ~/.bashrc
+
 uci set network.wan.device='br-wan'
 uci set network.wan.proto='static'
 uci set network.wan.ipaddr='178.255.93.241'
 uci set network.wan.netmask='255.255.255.254'
 uci set network.wan.gateway='178.255.93.240'
-uci set network.wan.dns='1.1.1.1 8.8.8.8 188.215.74.252'
+uci set network.wan.dns='1.1.1.1'
 uci commit
 service network restart
 mv /etc/flowtable.conf /etc/flowtable.conf.bak # Permanent fix (survives reboot)
 nft delete table inet filter # Apply immediately without reboot
 echo 1 > /sys/bus/pci/devices/0003:01:00.0/remove
+sleep 4
 echo 1 > /sys/bus/pci/rescan
+```
+
+or:
+
+```sh
+uci set network.wan.dns='1.1.1.1 8.8.8.8 188.215.74.252'
 ```
 
 ### Access XGS-PON stick
