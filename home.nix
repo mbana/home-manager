@@ -338,6 +338,7 @@ in
     shellAliases = {
       # copy = "xclip -selection clipboard";
       # paste = "xclip -o -selection clipboard";
+      copy = "wl-copy --type 'text/plain;charset=utf-8'";
 
       sudoroot = "sudo --preserve-env=\"$(env|cut -f1 -d=|tr '\n' ,)\" env ";
       suroot = "sudo --preserve-env=\"$(env|cut -f1 -d=|tr '\n' ,)\" su --preserve-environment";
