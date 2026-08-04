@@ -18,8 +18,6 @@ saveenv
 boot
 ```
 
-03457 740 740
-
 ### Router config
 
 ```sh
@@ -33,6 +31,8 @@ uci commit
 service network restart
 mv /etc/flowtable.conf /etc/flowtable.conf.bak # Permanent fix (survives reboot)
 nft delete table inet filter # Apply immediately without reboot
+echo 1 > /sys/bus/pci/devices/0003:01:00.0/remove
+echo 1 > /sys/bus/pci/rescan
 ```
 
 ### Access XGS-PON stick
@@ -62,16 +62,8 @@ setenv bootargs 'ttyS0,115200n1 root=/dev/fit0 rootwait verbose debug ignore_log
 saveenv
 reset
 
-
-
 stop_on_panic watchdog.stop_on_reboot=0 softdog.soft_panic=1 ipv6.disable=1' $bootargs_debug'
 
-
-
-
-saveenv
-
-reset
 
 pci=off
 
@@ -99,4 +91,6 @@ root@OpenWrt:~# firstboot -y
 /dev/fitrw is not mounted
 /dev/fitrw will be erased on next mount
 
+## Virgin Media
 
+03457 740 740
