@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
+# scp ./config/network root@OpenWrt:/etc/config/network
 scp ./config/system root@OpenWrt:/etc/config/system
-scp ./config/network root@OpenWrt:/etc/config/network
 scp ./config/wireless root@OpenWrt:/etc/config/wireless
+scp ./config/dhcp root@OpenWrt:/etc/config/dhcp
 
 ssh root@OpenWrt << 'EOF'
 PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] ' >> ~/.bashrc
@@ -12,7 +13,7 @@ uci set network.wan.proto='static'
 uci set network.wan.ipaddr='178.255.93.241'
 uci set network.wan.netmask='255.255.255.254'
 uci set network.wan.gateway='178.255.93.240'
-uci set network.wan.dns='1.1.1.1 8.8.8.8'
+uci set network.wan.dns='1.1.1.1 8.8.8.8 188.215.74.252'
 mv /etc/flowtable.conf /etc/flowtable.conf.bak # Permanent fix (survives reboot)
 nft delete table inet filter # Apply immediately without reboot
 uci commit
@@ -20,9 +21,10 @@ uci commit
 uci commit network
 uci commit wireless
 uci commit system
+uci commit dhcp
 
-mv /etc/flowtable.conf /etc/flowtable.conf.bak # Permanent fix (survives reboot)
-nft delete table inet filter # Apply immediately without reboot
+mv /etc/flowtable.conf /etc/flowtable.conf.bak
+nft delete table inet filter
 uci commit
 
 opkg update
@@ -50,6 +52,9 @@ scp -r ./root/.zshrc root@OpenWrt:/root/.zshrc
 scp -r ./root/.zsh_history root@OpenWrt:/root/.zsh_history
 
 ssh root@OpenWrt << 'EOF'
+mv /etc/flowtable.conf /etc/flowtable.conf.bak
+nft delete table inet filter
+
 wifi reconf
 service network restart
 service system restart
