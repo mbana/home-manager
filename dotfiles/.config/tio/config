@@ -1,0 +1,14 @@
+[default]
+no-reconnect = false
+
+[openwrt]
+device = /dev/serial/by-id/usb-HOLTEK_USB_TO_UART_BRIDGE_0000-if00
+baudrate = 115200
+parity = none
+databits = 8
+stopbits = 1
+flow = none
+log = true
+log-file = openwrt.log
+no-reconnect = false
+

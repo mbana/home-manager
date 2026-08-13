@@ -12,6 +12,12 @@ setenv bootconf_extra 'mt7988a-bananapi-bpi-r4-pro-4e-sfp'
 saveenv
 ```
 
+setenv bootargs 'console=ttyS0,115200n1 pci=pcie_bus_perf root=/dev/fit0 rootwait ipv6.disable=1'
+saveenv
+
+echo 'mt7996e wed_enable=N' >> /etc/modules.conf
+
+
 ### Original no IPv6
 
 Remove `earlycon=uart8250,mmio32,0x11000000 ubi.block=0,firmware`:
@@ -62,11 +68,19 @@ uci set network.wan.gateway='178.255.93.240'
 uci set network.wan.dns='1.1.1.1'
 uci commit
 service network restart
-mv /etc/flowtable.conf /etc/flowtable.conf.bak # Permanent fix (survives reboot)
-nft delete table inet filter # Apply immediately without reboot
+mv /etc/flowtable.conf /etc/flowtable.conf.bak
+nft delete table inet filter
+
+mv /etc/flowtable.conf /etc/flowtable.conf.bak && nft delete table inet filter
+
 echo 1 > /sys/bus/pci/devices/0003:01:00.0/remove
 sleep 4
 echo 1 > /sys/bus/pci/rescan
+```
+
+```
+mv /etc/flowtable.conf /etc/flowtable.conf.bak # Permanent fix (survives reboot)
+nft delete table inet filter # Apply immediately without reboot
 ```
 
 or:

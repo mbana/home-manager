@@ -32,6 +32,8 @@ in
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
     
+    ".config/tio/config".source = ./dotfiles/.config/tio/config;
+
     # ".android/" = {
     #   source = ./dotfiles/.android;
     #   recursive = true;
@@ -222,6 +224,8 @@ in
 
     # Terminal:
     wezterm
+    tio
+    wl-clipboard
 
     # Android:
     android-tools

@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 
+# PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] ' >> ~/.bashrc
+
 ssh root@OpenWrt << 'EOF'
 set -x
 
-PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] ' >> ~/.bashrc
+uci set system.@system[0].timezone='GMT0BST,M3.5.0/1,M10.5.0'
+uci set system.@system[0].zonename='Europe/London'
+uci commit system
+EOF
+
+ssh root@OpenWrt << 'EOF'
+set -x
 
 uci set network.wan.device='br-wan'
 uci set network.wan.proto='static'
@@ -12,12 +20,7 @@ uci set network.wan.netmask='255.255.255.254'
 uci set network.wan.gateway='178.255.93.240'
 uci set network.wan.dns='1.1.1.1 8.8.8.8 188.215.74.252'
 (mv /etc/flowtable.conf /etc/flowtable.conf.bak && nft delete table inet filter) || echo 'nothing to remove for /etc/flowtable.conf'
-uci commit
-
 uci commit network
-uci commit wireless
-uci commit system
-uci commit dhcp
 EOF
 
 ssh root@OpenWrt << 'EOF'
