@@ -7,9 +7,11 @@
 ```
 MT7988> printenv
 ...
-setenv bootargs 'console=ttyS0,115200n1 pci=pcie_bus_perf root=/dev/fit0 rootwait ipv6.disable=1'
+setenv bootargs 'console=ttyS0,115200n1 pci=pcie_bus_perf root=/dev/fit0 rootwait ipv6.disable=1 nokaslr'
 setenv bootconf_extra 'mt7988a-bananapi-bpi-r4-pro-4e-sfp'
 saveenv
+printenv
+reset
 ```
 
 setenv bootargs 'console=ttyS0,115200n1 pci=pcie_bus_perf root=/dev/fit0 rootwait ipv6.disable=1'
@@ -65,8 +67,8 @@ uci set network.wan.proto='static'
 uci set network.wan.ipaddr='178.255.93.241'
 uci set network.wan.netmask='255.255.255.254'
 uci set network.wan.gateway='178.255.93.240'
-uci set network.wan.dns='1.1.1.1'
-uci commit
+uci set network.wan.dns='1.1.1.1 8.8.8.8 188.215.74.252'
+uci commit network
 service network restart
 mv /etc/flowtable.conf /etc/flowtable.conf.bak
 nft delete table inet filter

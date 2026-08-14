@@ -1,0 +1,12 @@
+PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] '
+
+alias -- mkdir='mkdir -pv'
+alias -- mv='mv -v'
+alias -- cp='cp -v'
+alias -- rm='rm -v'
+alias -- grep='grep --color=auto'
+alias -- ip='ip --color'
+alias -- ll='ls -alh --color=auto -t'
+alias -- ls='ls --color=auto'
+alias -- rg='rg --pcre2 --glob '\''!{/proc,/sys}'\'''
+alias -- fd='fd --absolute-path --exclude /proc --exclude /sys'
