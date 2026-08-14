@@ -54,6 +54,7 @@ scp -r ./root/bin root@OpenWrt:/root/bin
 scp -r ./root/.zshrc root@OpenWrt:/root/.zshrc
 scp -r ./root/.zsh_history root@OpenWrt:/root/.zsh_history
 scp -r ./root/.profile root@OpenWrt:/root/.profile
+scp -r ./root/.tmux.conf root@OpenWrt:/root/.tmux.conf
 
 # ssh root@OpenWrt << 'EOF'
 # (mv /etc/flowtable.conf /etc/flowtable.conf.bak && nft delete table inet filter) || echo 'nothing to remove for `/etc/flowtable.conf`'

@@ -33,6 +33,7 @@ in
     # ".screenrc".source = dotfiles/screenrc;
     
     ".config/tio/config".source = ./dotfiles/.config/tio/config;
+    ".tmux.conf".source = ./dotfiles/.tmux.conf;
 
     # ".android/" = {
     #   source = ./dotfiles/.android;
@@ -147,9 +148,9 @@ in
 
     gdb
     valgrind
-    lldb
-    llvm
-    clang
+    # lldb
+    # llvm
+    # clang
     strace
 
     jq
@@ -228,7 +229,7 @@ in
     wl-clipboard
 
     # Android:
-    android-tools
+    # android-tools
     # androidsdk
     # androidenv.androidPkgs.tools
     # androidenv.androidPkgs.ndk-bundle
