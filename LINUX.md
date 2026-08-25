@@ -19,8 +19,8 @@ echo 'net.ipv6.conf.lo.disable_ipv6 = 1' | sudo tee -a /etc/sysctl.d/100-ipv6.co
 # Refresh settings
 sudo sysctl --system
 # Setup the `groups` and add user to the group.
-echo kvm libvirt wireshark docker | xargs -n 1 sudo groupadd || echo 'group already exists'
-sudo usermod --append --groups kvm,libvirt,wireshark,docker "$(whoami)"
+echo kvm libvirt wireshark docker dialout | xargs -n 1 sudo groupadd || echo 'group already exists'
+sudo usermod --append --groups kvm,libvirt,wireshark,docker,dialout "$(whoami)"
 ```
 
 ## Post Install / Quality of Life
