@@ -292,7 +292,7 @@ in
     settings = {
       user = {
         name = "Mohamed Bana";
-        email = "mohamed.omar.bana@gmail.com";
+        email = "m@bana.io";
       };
       init = {
         defaultBranch = "main";
@@ -318,13 +318,13 @@ in
           ];
         };
       };
-      # url = {
-      #   "git@gitlab.com:" = {
-      #     insteadOf = [
-      #       "https://gitlab.com/"
-      #     ];
-      #   };
-      # };
+      url = {
+        "git@gitlab.com:" = {
+          insteadOf = [
+            "https://gitlab.com/"
+          ];
+        };
+      };
       alias = {
         d = "diff";
         dc = "diff --cached";
