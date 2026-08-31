@@ -222,6 +222,7 @@ in
     # Fonts:
     iosevka
     fira-sans
+    cascadia-code
 
     # Terminal:
     wezterm
@@ -405,16 +406,26 @@ in
       # Sometimes a command times out ... a slow SSD perhaps? I'm not sure.
       # [WARN] - (starship::context): Scanning current directory timed out.
       # [WARN] - (starship::context): You can set scan_timeout in your config to a higher value to allow longer-running scans to keep executing.
-      scan_timeout = 4000;
+      scan_timeout = 6000;
       ## "$schema" = "https://starship.rs/config-schema.json";
       ##
-      ##add_newline = true;
+      # add_newline = false;
       # line_break = {
       #   disabled = true;
       # };
+      # status = {
+      #   disabled = false;
+      #   map_symbol = true;
+      # };
+      # cmd_duration = {
+      #   # One minute
+      #   min_time = 32000;
+      #   show_notifications = true;
+      # };
+      # Use `${custom.local_ipv4}` instead.
       localip = {
         ssh_only = false;
-        format = "@[$localipv4](bold red) ";
+        format = "@[$localipv4](bold red)";
         disabled = true;
       };
       username = {
@@ -429,18 +440,13 @@ in
         truncate_to_repo = false;
         truncation_length = 0;
       };
-      status = {
-        disabled = false;
-        map_symbol = true;
-      };
-      cmd_duration = {
-        # One minute
-        min_time = 32000;
-        show_notifications = true;
-      };
       character = {
-        success_symbol = "[\\$](bold green) ";
-        error_symbol = "[\\$](bold red) ";
+        success_symbol = "[\\$](bold green)";
+        error_symbol = "[\\$](bold red)";
+      };
+      fill = {
+        symbol = " ";
+        # style = 'bold green';
       };
       custom.local_ipv4 = {
         command = ''
@@ -449,13 +455,18 @@ in
           color=''${colors[''$RANDOM % ''${#colors[@]}]}
           printf '\033[38;5;%sm%s\033[0m' "$color" "$ip"
         '';
-        # shell = [ "bash", "--noprofile", "--norc" ];
+        shell = [
+          "bash"
+          "--noprofile"
+          "--norc"
+        ];
         when = true;
         unsafe_no_escape = true;
-        format = "@[$output](bold)";
+        format = "[$output](bold)";
+        # format = "[$output](bold bg:white)";
         # format = "\$all\@[$output](bold)\$directory";
       };
-      # format = "$all$directory";
+      format = "$all $fill \${custom.local_ipv4} $line_break$character";
       # format = "$all\${custom.local_ipv4} $directory$status$character";
     };
   };
