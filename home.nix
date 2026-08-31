@@ -450,10 +450,16 @@ in
       };
       custom.local_ipv4 = {
         command = ''
-          ip=''$(hostname -I | awk '{print ''$1}')
-          colors=(196 202 208 214 190 154 118 82 51 45 39 33 27 57 93 129 165 201 197)
-          color=''${colors[''$RANDOM % ''${#colors[@]}]}
-          printf '\033[38;5;%sm%s\033[0m' "$color" "$ip"
+          ipv4_address=''$(hostname -I | awk '{print ''$1}')
+          hostname_hash="$(echo "''$HOSTNAME" | md5sum | awk '{print ''$1}')"
+          colors=( 1 2 3 4 5 6 7 )
+          # Convert into a positive integer.
+          color_index=''$(( 0x''$hostname_hash % ''${#colors[@]} ))
+          if [[ ''$color_index -lt 0 ]]; then
+            color_index=''$(( -''$color_index ))
+          fi
+          color=''${colors[''$color_index]}
+          printf '\033[38;5;%sm%s\033[0m' "$color" "$ipv4_address"
         '';
         shell = [
           "bash"
