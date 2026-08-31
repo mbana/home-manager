@@ -409,13 +409,13 @@ in
       ## "$schema" = "https://starship.rs/config-schema.json";
       ##
       ##add_newline = true;
-      ##line_break = {
-      ##  disabled = true;
-      ##}
+      # line_break = {
+      #   disabled = true;
+      # };
       localip = {
         ssh_only = false;
         format = "@[$localipv4](bold red) ";
-        disabled = false;
+        disabled = true;
       };
       username = {
         disabled = false;
@@ -429,6 +429,34 @@ in
         truncate_to_repo = false;
         truncation_length = 0;
       };
+      status = {
+        disabled = false;
+        map_symbol = true;
+      };
+      cmd_duration = {
+        # One minute
+        min_time = 32000;
+        show_notifications = true;
+      };
+      character = {
+        success_symbol = "[\\$](bold green) ";
+        error_symbol = "[\\$](bold red) ";
+      };
+      custom.local_ipv4 = {
+        command = ''
+          ip=''$(hostname -I | awk '{print ''$1}')
+          colors=(196 202 208 214 190 154 118 82 51 45 39 33 27 57 93 129 165 201 197)
+          color=''${colors[''$RANDOM % ''${#colors[@]}]}
+          printf '\033[38;5;%sm%s\033[0m' "$color" "$ip"
+        '';
+        # shell = [ "bash", "--noprofile", "--norc" ];
+        when = true;
+        unsafe_no_escape = true;
+        format = "@[$output](bold)";
+        # format = "\$all\@[$output](bold)\$directory";
+      };
+      # format = "$all$directory";
+      # format = "$all\${custom.local_ipv4} $directory$status$character";
     };
   };
 
