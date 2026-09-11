@@ -32,6 +32,7 @@ in
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
     
+    ".config/ccache/ccache.conf".source = ./dotfiles/.config/ccache/ccache.conf;
     ".config/tio/config".source = ./dotfiles/.config/tio/config;
     ".tmux.conf".source = ./dotfiles/.tmux.conf;
 
@@ -135,6 +136,9 @@ in
     # rustc
     # cargo
     # python3
+
+    # Compiler cache
+    ccache
 
     # Kubernetes:
     kubectl
@@ -261,8 +265,15 @@ in
   #   VISUAL = "code --wait --new-window";
   # };
 
-  # For Claude, Rust and Go stuff.
+  home.sessionVariables = {
+    # https://community.nxp.com/t5/i-MX-Processors-Knowledge-Base/Speeding-up-your-recurring-gcc-compilations-with-ccache/ta-p/1127794
+    # CROSS_COMPILE = "ccache arm-linux-gnueabihf-";
+  };
+
+  # For Claude, Rust, Go and ccache stuff.
   home.sessionPath = [
+    "/usr/lib/ccache"
+    "/usr/lib/ccache/bin"
     "$HOME/.bin"
     "$HOME/bin"
     "$HOME/.local/bin"
@@ -353,11 +364,12 @@ in
 
       ls = "ls --color=auto";
       ll = "ls -alh --color=auto -t";
+
       grep = "grep --color=auto";
 
-      fd = "fd --absolute-path --exclude /proc --exclude /sys";
+      fd = "fd --no-ignore-vcs --hidden --no-ignore --absolute-path --exclude /proc --exclude /sys";
 
-      rg = "rg --pcre2 --glob '!{/proc,/sys}'";
+      rg = "rg --no-ignore-vcs --hidden --pcre2 --glob '!{/proc,/sys}'";
 
       # Navigation
       ".." = "cd ..";
@@ -395,6 +407,12 @@ in
     # '';
     # sessionVariables = {
     #   EDITOR = "code --wait --new-window";
+    # };
+
+    # https://community.nxp.com/t5/i-MX-Processors-Knowledge-Base/Speeding-up-your-recurring-gcc-compilations-with-ccache/ta-p/1127794
+    # sessionVariables = {
+    #   CROSS_COMPILE = "ccache arm-linux-gnueabihf-";
+    #   PATH = "/usr/lib/ccache/bin:$PATH";
     # };
   };
 
