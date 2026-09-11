@@ -272,6 +272,7 @@ in
 
   # For Claude, Rust, Go and ccache stuff.
   home.sessionPath = [
+    "$(find $HOME/bin/ -maxdepth 1 -mindepth 1 -print0 | paste --zero-terminated -d':' -s)"
     "/usr/lib/ccache"
     "/usr/lib/ccache/bin"
     "$HOME/.bin"
