@@ -9,6 +9,5 @@ databits = 8
 stopbits = 1
 flow = none
 log = true
-log-file = openwrt.log
-no-reconnect = false
-
+log-file = /home/mbana/dev/github/mbana/openwrt/logs/openwrt.log
+no-reconnect = true
