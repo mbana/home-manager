@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   pkgsUnstable = import <nixpkgs-unstable> {};
@@ -271,20 +271,24 @@ in
   };
 
   # For Claude, Rust, Go and ccache stuff.
-  home.sessionPath = [
-    "$(find $HOME/bin/ -maxdepth 1 -mindepth 1 -print0 | paste --zero-terminated -d':' -s)"
+  # find bin/ -maxdepth 1 -mindepth 1 -printf '"${config.home.homeDirectory}/%p/"\n' | paste --zero-terminated -d':' -s
+  # find bin/ -maxdepth 1 -mindepth 1 -printf '"${config.home.homeDirectory}/%p/"\n' 
+  home.sessionPath = [ 
+    "${config.home.homeDirectory}/bin/tftp-now-linux/"
+    "${config.home.homeDirectory}/bin/ptyxis/"
+    "${config.home.homeDirectory}/bin/fresh-editor-x86_64-unknown-linux-gnu/"
+    "${config.home.homeDirectory}/bin/pktstat-bpf_0.18.0_linux_amd64.pkg/"
+    "${config.home.homeDirectory}/bin/ookla-speedtest-1.2.0-linux-x86_64/"
+  ] ++ [
     "/usr/lib/ccache"
     "/usr/lib/ccache/bin"
-    "$HOME/.bin"
     "$HOME/bin"
+    "$HOME/.bin"
     "$HOME/.local/bin"
     "$HOME/go/bin"
     "$HOME/.cargo/env"
     "$HOME/.npm-global/bin"
   ];
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 
   programs.git ={
     enable = true;
@@ -531,4 +535,9 @@ in
   #   #   };
   #   # };
   # };
+
+  programs.command-not-found.enable = true;
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 }
