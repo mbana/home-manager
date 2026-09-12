@@ -274,11 +274,11 @@ in
   # find bin/ -maxdepth 1 -mindepth 1 -printf '"${config.home.homeDirectory}/%p/"\n' | paste --zero-terminated -d':' -s
   # find bin/ -maxdepth 1 -mindepth 1 -printf '"${config.home.homeDirectory}/%p/"\n' 
   home.sessionPath = [ 
-    "${config.home.homeDirectory}/bin/tftp-now-linux/"
-    "${config.home.homeDirectory}/bin/ptyxis/"
-    "${config.home.homeDirectory}/bin/fresh-editor-x86_64-unknown-linux-gnu/"
-    "${config.home.homeDirectory}/bin/pktstat-bpf_0.18.0_linux_amd64.pkg/"
-    "${config.home.homeDirectory}/bin/ookla-speedtest-1.2.0-linux-x86_64/"
+    "${config.home.homeDirectory}/bin/tftp-now-linux"
+    "${config.home.homeDirectory}/bin/ptyxis"
+    "${config.home.homeDirectory}/bin/fresh-editor-x86_64-unknown-linux-gnu"
+    "${config.home.homeDirectory}/bin/pktstat-bpf_0.18.0_linux_amd64.pkg"
+    "${config.home.homeDirectory}/bin/ookla-speedtest-1.2.0-linux-x86_64"
   ] ++ [
     "/usr/lib/ccache"
     "/usr/lib/ccache/bin"
@@ -286,8 +286,8 @@ in
     "$HOME/.bin"
     "$HOME/.local/bin"
     "$HOME/go/bin"
-    "$HOME/.cargo/env"
     "$HOME/.npm-global/bin"
+    # "$HOME/.cargo/env"
   ];
 
   programs.git ={
@@ -407,6 +407,9 @@ in
       share = false;
       size = 1000000000;
     };
+    initContent = ''
+      . "''${HOME}/.cargo/env"
+    '';
     # initContent = ''
     #   source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
     # '';
