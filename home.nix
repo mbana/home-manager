@@ -1,7 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  pkgsUnstable = import <nixpkgs-unstable> {};
+  pkgsUnstable = import <nixpkgs-unstable> { };
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -31,7 +36,7 @@ in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
-    
+
     ".config/ccache/ccache.conf".source = ./dotfiles/.config/ccache/ccache.conf;
     ".config/tio/config".source = ./dotfiles/.config/tio/config;
     ".tmux.conf".source = ./dotfiles/.tmux.conf;
@@ -44,7 +49,7 @@ in
     ".gdbinit".source = ./dotfiles/.gdbinit;
     # Will allow us to install global npm packages without sudo and without polluting the Nix store, and also to have a consistent location for npm global packages across different machines. E.g., `npm install --global @openai/codex` will install it to `~/.npm-global/bin`.
     ".npmrc".source = ./dotfiles/.npmrc;
-  
+
     # # https://github.com/nix-community/home-manager/issues/3090#issuecomment-3341948190
     # ".ssh/id_ed25519.pub".text = ''
     #   ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDGRM+2Fne1yndOyeDWjRwlC2fuyISc3iQSQMRorN61 Mohamed Bana <mohamed.omar.bana@gmail.com>
@@ -70,7 +75,7 @@ in
     wget
     tmux
     zellij
-  
+
     vim
     neovim
 
@@ -79,7 +84,7 @@ in
     # binutils # conflicts with `clang` because both provide `ld.gold`.
     moreutils
     plocate
-    gnupg
+    # gnupg
     curl
     wget
     watch
@@ -94,6 +99,7 @@ in
     nix-index
     nixfmt
     # nix-locate
+    nil
 
     # Rust tools/stuff:
     # https://zaiste.net/posts/shell-commands-rust/
@@ -147,7 +153,7 @@ in
     k9s
     stern
     docker-compose
-    
+
     sqlite
 
     gdb
@@ -229,7 +235,7 @@ in
     cascadia-code
 
     # Terminal:
-    wezterm
+    # wezterm
     tio
     wl-clipboard
 
@@ -268,18 +274,23 @@ in
   home.sessionVariables = {
     # https://community.nxp.com/t5/i-MX-Processors-Knowledge-Base/Speeding-up-your-recurring-gcc-compilations-with-ccache/ta-p/1127794
     # CROSS_COMPILE = "ccache arm-linux-gnueabihf-";
+    IDF_PATH = "${config.home.homeDirectory}/.espressif/master/esp-idf";
   };
+  # export IDF_PATH=~/esp/esp-idf
+  # export PATH="$PATH:$IDF_PATH/tools"
 
   # For Claude, Rust, Go and ccache stuff.
   # find bin/ -maxdepth 1 -mindepth 1 -printf '"${config.home.homeDirectory}/%p/"\n' | paste --zero-terminated -d':' -s
-  # find bin/ -maxdepth 1 -mindepth 1 -printf '"${config.home.homeDirectory}/%p/"\n' 
-  home.sessionPath = [ 
+  # find bin/ -maxdepth 1 -mindepth 1 -printf '"${config.home.homeDirectory}/%p/"\n'
+  home.sessionPath = [
     "${config.home.homeDirectory}/bin/tftp-now-linux"
     "${config.home.homeDirectory}/bin/ptyxis"
     "${config.home.homeDirectory}/bin/fresh-editor-x86_64-unknown-linux-gnu"
     "${config.home.homeDirectory}/bin/pktstat-bpf_0.18.0_linux_amd64.pkg"
     "${config.home.homeDirectory}/bin/ookla-speedtest-1.2.0-linux-x86_64"
-  ] ++ [
+  ]
+  ++ [
+    "$\{IDF_PATH\}/tools"
     "/usr/lib/ccache"
     "/usr/lib/ccache/bin"
     "$HOME/bin"
@@ -290,7 +301,10 @@ in
     # "$HOME/.cargo/env"
   ];
 
-  programs.git ={
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+
+  programs.git = {
     enable = true;
     lfs.enable = true;
     ignores = [
@@ -408,7 +422,8 @@ in
       size = 1000000000;
     };
     initContent = ''
-      . "''${HOME}/.cargo/env"
+      . "''${HOME}/.cargo/env" || echo "ERROR: failed to source ''${HOME}/.cargo/env"
+      . "''${HOME}/export-esp.sh" || echo "ERROR: failed to source ''${HOME}/export-esp.sh"
     '';
     # initContent = ''
     #   source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
@@ -526,7 +541,7 @@ in
   #   #   "*" = {
   #   #     IdentityFile = "~/.ssh/id_ed25519";
   #   #     ForwardAgent = true;
-	#   #     StrictHostKeyChecking = "no";
+  #   #     StrictHostKeyChecking = "no";
   #   #     UserKnownHostsFile = "/dev/null";
   #   #   };
   #   #   # arm64.oci.bana.io
@@ -541,6 +556,29 @@ in
 
   programs.command-not-found.enable = true;
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  dconf.settings = {
+    # Some bullshite that I have to do because VScode keybindings conflicts with some keys
+    # that Ubuntu has set to manage moving between windows and workspaces.
+    #
+    # If all else fails and this does not work, just do the below in a terminal:
+    #
+    # dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-up "['disabled']"
+    # dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-down "['disabled']"
+    # dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-down "['disabled']"
+    # dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-up "['disabled']"
+    "org/gnome/desktop/wm/keybindings" = {
+      "switch-to-workspace-up" = [];
+      "switch-to-workspace-down" = [];
+      "move-to-workspace-down" = [];
+      "move-to-workspace-up" = [];
+    };
+  };
+  dconf.databases."user" = {
+    "org/gnome/desktop/wm/keybindings" = {
+      "switch-to-workspace-up" = [ ];
+      "switch-to-workspace-down" = [ ];
+      "move-to-workspace-up" = [ ];
+      "move-to-workspace-down" = [ ];
+    };
+  };
 }
