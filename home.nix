@@ -567,18 +567,80 @@ in
     # dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-down "['disabled']"
     # dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-up "['disabled']"
     "org/gnome/desktop/wm/keybindings" = {
-      "switch-to-workspace-up" = [];
-      "switch-to-workspace-down" = [];
-      "move-to-workspace-down" = [];
-      "move-to-workspace-up" = [];
+      "move-to-workspace-down" = [ ];
+      "move-to-workspace-left" = [
+        "<Super><Shift>Page_Up"
+        "<Super><Shift><Alt>Left"
+        "<Control><Shift><Alt>Left"
+      ];
+      "move-to-workspace-right" = [
+        "<Super><Shift>Page_Down"
+        "<Super><Shift><Alt>Right"
+        "<Control><Shift><Alt>Right"
+      ];
+      "move-to-workspace-up" = [ ];
+      "switch-to-workspace-down" = [ ];
+      "switch-to-workspace-left" = [
+        "<Super>Page_Up"
+        "<Super><Alt>Left"
+        "<Control><Alt>Left"
+      ];
+      "switch-to-workspace-right" = [
+        "<Super>Page_Down"
+        "<Super><Alt>Right"
+        "<Control><Alt>Right"
+      ];
+      "switch-to-workspace-up" = [ ];
+    };
+    "org/gnome/desktop/wm/preferences" = {
+      "num-workspaces" = 1;
+    };
+    "org/gnome/mutter" = {
+      "auto-maximize" = true;
+      "dynamic-workspaces" = false;
+      "workspaces-only-on-primary" = true;
+    };
+    "org/gnome/shell/extensions/tiling-assistant" = {
+      "enable-tiling-popup" = false;
     };
   };
   dconf.databases."user" = {
     "org/gnome/desktop/wm/keybindings" = {
-      "switch-to-workspace-up" = [ ];
-      "switch-to-workspace-down" = [ ];
-      "move-to-workspace-up" = [ ];
       "move-to-workspace-down" = [ ];
+      "move-to-workspace-left" = [
+        "<Super><Shift>Page_Up"
+        "<Super><Shift><Alt>Left"
+        "<Control><Shift><Alt>Left"
+      ];
+      "move-to-workspace-right" = [
+        "<Super><Shift>Page_Down"
+        "<Super><Shift><Alt>Right"
+        "<Control><Shift><Alt>Right"
+      ];
+      "move-to-workspace-up" = [ ];
+      "switch-to-workspace-down" = [ ];
+      "switch-to-workspace-left" = [
+        "<Super>Page_Up"
+        "<Super><Alt>Left"
+        "<Control><Alt>Left"
+      ];
+      "switch-to-workspace-right" = [
+        "<Super>Page_Down"
+        "<Super><Alt>Right"
+        "<Control><Alt>Right"
+      ];
+      "switch-to-workspace-up" = [ ];
+    };
+    "org/gnome/desktop/wm/preferences" = {
+      "num-workspaces" = 1;
+    };
+    "org/gnome/mutter" = {
+      "auto-maximize" = true;
+      "dynamic-workspaces" = false;
+      "workspaces-only-on-primary" = true;
+    };
+    "org/gnome/shell/extensions/tiling-assistant" = {
+      "enable-tiling-popup" = false;
     };
   };
 }
