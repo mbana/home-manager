@@ -85,8 +85,8 @@ let
       "clock-show-seconds" = false;
       "clock-show-weekday" = true;
       "color-scheme" = "prefer-dark";
-      "cursor-size" = 32;
-      "cursor-theme" = "default";
+    #   "cursor-size" = 32;
+      "cursor-theme" = "oxy-yellow";
       "enable-hot-corners" = true;
       "gtk-enable-primary-paste" = true;
       "gtk-theme" = "Yaru-dark";
@@ -98,6 +98,9 @@ let
     "org/gtk/gtk4/settings/file-chooser" = {
       "show-hidden" = true;
       "sort-directories-first" = true;
+    };
+    "org/gnome/GPaste" = {
+      "open-centered" = true;
     };
     "org/gnome/Ptyxis" = {
       "cursor-blink-mode" = "on";
@@ -123,4 +126,6 @@ in
 {
   dconf.settings = settings;
   dconf.databases."user" = settings;
+  # Does not exist
+  # programs.dconf.enable = true;
 }
