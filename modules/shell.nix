@@ -45,7 +45,7 @@
       ignoreSpace = true;
       saveNoDups = true;
 
-      path = "${builtins.getEnv "HOME"}/.zsh_history";
+      path = "/home/mbana/.zsh_history";
       save = 1000000000;
 
       # TODO: Change this back to `false`.
@@ -68,7 +68,6 @@
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-    # Configuration written to ~/.config/starship.toml
     settings = {
       scan_timeout = 6000;
       ## "$schema" = "https://starship.rs/config-schema.json";
