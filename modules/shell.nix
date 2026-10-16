@@ -1,5 +1,4 @@
 {
-  config,
   ...
 }:
 {
@@ -46,7 +45,7 @@
       ignoreSpace = true;
       saveNoDups = true;
 
-      path = "${config.programs.zsh.dotDir}/.zsh_history";
+      path = "${builtins.getEnv "HOME"}/.zsh_history";
       save = 1000000000;
 
       # TODO: Change this back to `false`.

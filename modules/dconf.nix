@@ -16,6 +16,7 @@ let
     # dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-down "['disabled']"
     # dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-up "['disabled']"
     "org/gnome/desktop/wm/keybindings" = {
+      "close" = ["<Super>q"];
       "move-to-workspace-down" = [ ];
       "move-to-workspace-left" = [
         "<Super><Shift>Page_Up"
@@ -129,6 +130,4 @@ in
 {
   dconf.settings = settings;
   dconf.databases."user" = settings;
-  # Does not exist
-  # programs.dconf.enable = true;
 }

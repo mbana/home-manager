@@ -6,13 +6,11 @@
     enable = true;
     lfs.enable = true;
     ignores = [
-      # Ignore these folders
       ".ignore"
       ".ignore/"
       ".tmp"
       ".tmp/"
     ];
-    # Sign all commits using ssh key
     signing = {
       format = "ssh";
       key = "~/.ssh/id_ed25519.pub";
@@ -39,7 +37,6 @@
       commit = {
         verbose = true;
       };
-      # Use SSH instead of HTTPS for GitHub and GitLab
       url = {
         "git@github.com:" = {
           insteadOf = [

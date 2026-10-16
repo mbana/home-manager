@@ -1,14 +1,10 @@
 {
-  pkgs,
+  pkgsUnstable, pkgs,
   ...
 }:
-let
-  pkgsUnstable = import <nixpkgs-unstable> { };
-in
 {
   # Allow unfree packages
-  # config.allowUnfree = true;
-  # nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (pkg: true);
 
   # Auto accept Android SDK licenses
@@ -30,6 +26,8 @@ in
 
     vim
     neovim
+    micro
+    fresh-editor
 
     coreutils
     findutils
@@ -48,11 +46,11 @@ in
     nix-zsh-completions
     statix
     nix-diff
-    nix-index
     nixfmt
-    # nix-locate
     nil
     dconf2nix
+    # nix-locate
+    # nix-index
 
     # Rust tools/stuff:
     # https://zaiste.net/posts/shell-commands-rust/
@@ -79,9 +77,7 @@ in
     watchexec
     just
     delta
-    #Compiling hgrep v0.3.9 (/nix/var/nix/builds/nix-98451-3162612818/source)
-    #error: linker `aarch64-linux-gnu-gcc` not found
-    #hgrep
+    hgrep
     eza
 
     go
@@ -145,6 +141,8 @@ in
     wireshark-cli
     sshpass
     tailscale
+
+    rs-tftpd
 
     # System information tools:
     screenfetch
