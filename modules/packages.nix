@@ -1,6 +1,4 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
@@ -9,6 +7,8 @@ let
 in
 {
   # Allow unfree packages
+  # config.allowUnfree = true;
+  # nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (pkg: true);
 
   # Auto accept Android SDK licenses

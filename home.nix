@@ -26,7 +26,6 @@
     # Will allow us to install global npm packages without sudo and without polluting the Nix store, and also to have a consistent location for npm global packages across different machines. E.g., `npm install --global @openai/codex` will install it to `~/.npm-global/bin`.
     ".npmrc".source = ./dotfiles/.npmrc;
   };
-
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell
@@ -47,7 +46,6 @@
     EDITOR = "code --wait --new-window";
     VISUAL = "code --wait --new-window";
   };
-
   # For Claude, Rust, Go and ccache stuff.
   # find bin/ -maxdepth 1 -mindepth 1 -printf '"${config.home.homeDirectory}/%p/"\n' | paste --zero-terminated -d':' -s
   # find bin/ -maxdepth 1 -mindepth 1 -printf '"${config.home.homeDirectory}/%p/"\n'
@@ -68,18 +66,8 @@
     "$HOME/go/bin"
     "$HOME/.npm-global/bin"
   ];
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  # # Takes a very long time to index.
-  # programs.nix-index = {
-  #   enable = true;
-  #   enableZshIntegration = true;
-  # };
-  # # Command-not-found handler to suggest nix way of installing stuff.
-  # programs.nix-index-database.comma.enable = true;
-  programs.command-not-found.enable = true;
-
   # https://wiki.nixos.org/wiki/Home_Manager#Usage_on_non-NixOS_Linux
   targets.genericLinux.enable = true;
   xdg.enable = true;
@@ -87,11 +75,12 @@
   fonts.fontconfig.enable = true;
 
   imports = [
-    ./packages.nix
-    ./shell.nix
-    ./ssh.nix
-    ./git.nix
-    ./dconf.nix
-    ./packages.nix
+    ./modules/packages.nix
+    ./modules/shell.nix
+    ./modules/ssh.nix
+    ./modules/git.nix
+    ./modules/dconf.nix
+    ./modules/packages.nix
+    # ./modules/nix-index.nix
   ];
 }

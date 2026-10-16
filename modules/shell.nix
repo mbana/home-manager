@@ -1,4 +1,7 @@
-{ lib, config, ... }:
+{
+  config,
+  ...
+}:
 {
   programs.zsh = {
     enable = true;
@@ -57,9 +60,10 @@
     # initContent = ''
     #   source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
     # '';
-    # sessionVariables = {
-    #   EDITOR = "code --wait --new-window";
-    # };
+    sessionVariables = {
+      EDITOR = "code --wait --new-window";
+      VISUAL = "code --wait --new-window";
+    };
   };
 
   programs.starship = {
@@ -67,9 +71,6 @@
     enableZshIntegration = true;
     # Configuration written to ~/.config/starship.toml
     settings = {
-      # Sometimes a command times out ... a slow SSD perhaps? I'm not sure.
-      # [WARN] - (starship::context): Scanning current directory timed out.
-      # [WARN] - (starship::context): You can set scan_timeout in your config to a higher value to allow longer-running scans to keep executing.
       scan_timeout = 6000;
       ## "$schema" = "https://starship.rs/config-schema.json";
       ##
@@ -155,6 +156,5 @@
     enable = true;
     enableZshIntegration = true;
     installVimSyntax = true;
-    
   };
 }

@@ -15,12 +15,10 @@ nix-channel --add https://nixos.org/channels/nixos-26.05 nixpkgs
 nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-26.05.tar.gz home-manager
 nix-channel --update
+install -D <(printf '%s\n' "experimental-features = nix-command flakes") ~/.config/nix/nix.conf
+sudo systemctl restart nix-daemon.service
 nix-shell '<home-manager>' -A install
-mkdir -pv ~/dev/github/mbana
-cd ~/dev/github/mbana
-git clone https://github.com/mbana/home-manager.git 
-cd home-manager
-ln -sfv $(pwd)/home.nix ~/.config/home-manager/home.nix
+git clone https://github.com/mbana/home-manager.git ~/.config/home-manager
 home-manager switch
 sudo chsh --shell $(which zsh) $(whoami)
 ```

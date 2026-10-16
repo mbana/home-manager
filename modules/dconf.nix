@@ -1,5 +1,8 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
-{ lib, ... }:
+{
+  lib,
+  ...
+}:
 with lib.hm.gvariant;
 let
   settings = {
