@@ -82,6 +82,7 @@
 
   # https://wiki.nixos.org/wiki/Home_Manager#Usage_on_non-NixOS_Linux
   targets.genericLinux.enable = true;
+  xdg.enable = true;
   # Enable fontconfig to manage fonts.
   fonts.fontconfig.enable = true;
 
