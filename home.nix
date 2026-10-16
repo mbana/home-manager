@@ -37,6 +37,7 @@ in
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
 
+    ".config/ghostty/config.ghostty".source = ./dotfiles/.config/ghostty/config.ghostty;
     ".config/ccache/ccache.conf".source = ./dotfiles/.config/ccache/ccache.conf;
     ".config/tio/config".source = ./dotfiles/.config/tio/config;
     ".tmux.conf".source = ./dotfiles/.tmux.conf;
@@ -100,6 +101,7 @@ in
     nixfmt
     # nix-locate
     nil
+    dconf2nix
 
     # Rust tools/stuff:
     # https://zaiste.net/posts/shell-commands-rust/
@@ -238,6 +240,10 @@ in
     # wezterm
     tio
     wl-clipboard
+    ghostty
+
+    # Window manager:
+    hyprland
 
     # Android:
     # android-tools
@@ -272,8 +278,6 @@ in
   # };
 
   home.sessionVariables = {
-    # https://community.nxp.com/t5/i-MX-Processors-Knowledge-Base/Speeding-up-your-recurring-gcc-compilations-with-ccache/ta-p/1127794
-    # CROSS_COMPILE = "ccache arm-linux-gnueabihf-";
     IDF_PATH = "${config.home.homeDirectory}/.espressif/master/esp-idf";
   };
   # export IDF_PATH=~/esp/esp-idf
@@ -380,14 +384,10 @@ in
       suroot = "sudo --preserve-env=\"$(env|cut -f1 -d=|tr '\n' ,)\" su --preserve-environment";
 
       ip = "ip --color";
-
       ls = "ls --color=auto";
       ll = "ls -alh --color=auto -t";
-
       grep = "grep --color=auto";
-
       fd = "fd --no-ignore-vcs --hidden --no-ignore --absolute-path --exclude /proc --exclude /sys";
-
       rg = "rg --no-ignore-vcs --hidden --pcre2 --glob '!{/proc,/sys}'";
 
       # Navigation
@@ -400,9 +400,6 @@ in
       cp = "cp -v";
       mv = "mv -v";
       rm = "rm -vi";
-
-      # Home Manager
-      home-manager-switch = "cd ~/dev/github/mbana/home-manager && git pull && ln -sfv $(pwd)/home.nix ~/.config/home-manager/home.nix && home-manager switch";
 
       # Dev aliases
       dev-dir = "cd ~/dev/github/mbana/";
@@ -430,12 +427,6 @@ in
     # '';
     # sessionVariables = {
     #   EDITOR = "code --wait --new-window";
-    # };
-
-    # https://community.nxp.com/t5/i-MX-Processors-Knowledge-Base/Speeding-up-your-recurring-gcc-compilations-with-ccache/ta-p/1127794
-    # sessionVariables = {
-    #   CROSS_COMPILE = "ccache arm-linux-gnueabihf-";
-    #   PATH = "/usr/lib/ccache/bin:$PATH";
     # };
   };
 
@@ -522,17 +513,19 @@ in
     enable = true;
     enableZshIntegration = true;
     flags = [ "--disable-up-arrow" ]; # or --disable-ctrl-r
-    # settings = {
-    #   auto_sync = true;
-    #   sync_frequency = "1m";
-    # };
+    settings = {
+      auto_sync = true;
+      sync_frequency = "1m";
+    };
   };
 
-  # # Takes a very long time to index.
-  # programs.nix-index = {
-  #   enable = true;
-  #   enableZshIntegration = true;
-  # };
+  # Takes a very long time to index.
+  programs.nix-index = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  # programs.command-not-found.enable = true;
 
   # programs.ssh = {
   #   enable = true;
@@ -554,93 +547,11 @@ in
   #   # };
   # };
 
-  programs.command-not-found.enable = true;
+  # Does not exist
+  # programs.dconf.enable = true;
 
-  dconf.settings = {
-    # Some bullshite that I have to do because VScode keybindings conflicts with some keys
-    # that Ubuntu has set to manage moving between windows and workspaces.
-    #
-    # If all else fails and this does not work, just do the below in a terminal:
-    #
-    # dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-up "['disabled']"
-    # dconf write /org/gnome/desktop/wm/keybindings/switch-to-workspace-down "['disabled']"
-    # dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-down "['disabled']"
-    # dconf write /org/gnome/desktop/wm/keybindings/move-to-workspace-up "['disabled']"
-    "org/gnome/desktop/wm/keybindings" = {
-      "move-to-workspace-down" = [ ];
-      "move-to-workspace-left" = [
-        "<Super><Shift>Page_Up"
-        "<Super><Shift><Alt>Left"
-        "<Control><Shift><Alt>Left"
-      ];
-      "move-to-workspace-right" = [
-        "<Super><Shift>Page_Down"
-        "<Super><Shift><Alt>Right"
-        "<Control><Shift><Alt>Right"
-      ];
-      "move-to-workspace-up" = [ ];
-      "switch-to-workspace-down" = [ ];
-      "switch-to-workspace-left" = [
-        "<Super>Page_Up"
-        "<Super><Alt>Left"
-        "<Control><Alt>Left"
-      ];
-      "switch-to-workspace-right" = [
-        "<Super>Page_Down"
-        "<Super><Alt>Right"
-        "<Control><Alt>Right"
-      ];
-      "switch-to-workspace-up" = [ ];
-    };
-    "org/gnome/desktop/wm/preferences" = {
-      "num-workspaces" = 1;
-    };
-    "org/gnome/mutter" = {
-      "auto-maximize" = true;
-      "dynamic-workspaces" = false;
-      "workspaces-only-on-primary" = true;
-    };
-    "org/gnome/shell/extensions/tiling-assistant" = {
-      "enable-tiling-popup" = false;
-    };
-  };
-  dconf.databases."user" = {
-    "org/gnome/desktop/wm/keybindings" = {
-      "move-to-workspace-down" = [ ];
-      "move-to-workspace-left" = [
-        "<Super><Shift>Page_Up"
-        "<Super><Shift><Alt>Left"
-        "<Control><Shift><Alt>Left"
-      ];
-      "move-to-workspace-right" = [
-        "<Super><Shift>Page_Down"
-        "<Super><Shift><Alt>Right"
-        "<Control><Shift><Alt>Right"
-      ];
-      "move-to-workspace-up" = [ ];
-      "switch-to-workspace-down" = [ ];
-      "switch-to-workspace-left" = [
-        "<Super>Page_Up"
-        "<Super><Alt>Left"
-        "<Control><Alt>Left"
-      ];
-      "switch-to-workspace-right" = [
-        "<Super>Page_Down"
-        "<Super><Alt>Right"
-        "<Control><Alt>Right"
-      ];
-      "switch-to-workspace-up" = [ ];
-    };
-    "org/gnome/desktop/wm/preferences" = {
-      "num-workspaces" = 1;
-    };
-    "org/gnome/mutter" = {
-      "auto-maximize" = true;
-      "dynamic-workspaces" = false;
-      "workspaces-only-on-primary" = true;
-    };
-    "org/gnome/shell/extensions/tiling-assistant" = {
-      "enable-tiling-popup" = false;
-    };
-  };
+
+  imports = [
+    ./dconf.nix
+  ];
 }

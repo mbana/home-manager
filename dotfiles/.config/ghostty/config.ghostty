@@ -1,0 +1,28 @@
+theme = "Ubuntu"
+window-height=32
+window-width=128
+
+font-family = "Iosevka"
+font-size = 11
+#font-family = "Cascadia Mono Regular"
+#font-size = 10
+font-style-bold = Bold
+font-style-italic = Medium Italic
+font-style-bold-italic = Bold Italic
+
+# ss01: != and ===
+font-feature = "ss01"
+# ss02: <= and >=
+font-feature = "ss02"
+# ss03: -> and ~>
+font-feature = "ss03"
+# ss04: <> and </>
+font-feature = "ss04"
+# liga: //, ..., ||
+font-feature = "liga"
+
+# https://www.jonashietala.se/blog/2025/01/06/first_impressions_of_ghostty/
+gtk-titlebar = true
+#gtk-adwaita = true
+cursor-invert-fg-bg = true
+mouse-hide-while-typing = true
