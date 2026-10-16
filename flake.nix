@@ -1,4 +1,5 @@
 {
+  description = "`home-manager` configuration for `mbana` targeting multiple architectures";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
@@ -16,6 +17,7 @@
   };
   outputs =
     inputs@{
+      self,
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
@@ -23,20 +25,40 @@
       ...
     }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
+      systems = [
+        "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"
+      ];
+      forAllSystems =
+        f:
+        builtins.listToAttrs (
+          map (system: {
+            name = system;
+            value = f system;
+          }) systems
+        );
     in
     {
-      homeConfigurations.mbana = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit inputs; inherit pkgsUnstable; };
-        modules = [
-          ./home.nix
-          nix-index-database.homeModules.default
-          # optional to also wrap and install comma
-          { programs.nix-index-database.comma.enable = true; }
-        ];
-      };
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          pkgsUnstable = nixpkgs-unstable.legacyPackages.${system};
+        in
+        {
+          homeConfigurations.mbana = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = {
+              inherit pkgsUnstable;
+              inherit inputs;
+            };
+            modules = [
+              ./home.nix
+              nix-index-database.homeModules.default
+              # optional to also wrap and install comma
+              { programs.nix-index-database.comma.enable = true; }
+            ];
+          };
+        }
+      );
     };
 }
